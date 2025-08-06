@@ -55,10 +55,10 @@ $(document).ready(function(){
       contentType : "application/json; charset=utf-8",
       dataType : "json",
       success : function(data){
-        alert(data);
+        alert("success : " + data);
       },
       error : function(data){
-        alert(data);
+        alert("error : " + data);
       }
     });
 

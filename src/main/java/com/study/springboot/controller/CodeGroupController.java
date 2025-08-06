@@ -35,7 +35,7 @@ public class CodeGroupController {
         return new ResponseEntity<>(service.read(groupCode), HttpStatus.OK);
     }
 
-    @GetMapping("/{groupCode}")
+    @PutMapping("/{groupCode}")
     public ResponseEntity<CodeGroup> modify(@PathVariable String groupCode, @Validated @RequestBody CodeGroup codeGroup) throws Exception{
         service.modify(codeGroup);
         return new ResponseEntity<>(codeGroup, HttpStatus.OK);
