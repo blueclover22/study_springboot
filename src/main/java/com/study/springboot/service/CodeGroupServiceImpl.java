@@ -10,7 +10,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class CodeGroupServiceImpl implements CodeGroupService{
+public class CodeGroupServiceImpl implements CodeGroupService {
 
     private final CodeGroupRepository repository;
 

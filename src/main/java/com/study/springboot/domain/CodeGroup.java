@@ -20,7 +20,7 @@ import java.util.List;
 @ToString
 @Entity
 @EqualsAndHashCode(of = "groupCode")
-@Table(name="code_group")
+@Table(name = "code_group")
 public class CodeGroup {
     @Id
     @Column(length = 3)

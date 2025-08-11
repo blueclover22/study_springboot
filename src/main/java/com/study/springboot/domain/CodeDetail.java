@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode(of = {"groupCode", "codeValue"})
 @Entity
-@IdClass(CodeDetail.class)
+@IdClass(CodeDetailId.class)
 @Table(name="code_detail")
 public class CodeDetail {
     @Id
