@@ -20,6 +20,23 @@ $(document).ready(function () {
   // 상세 조회
   $("#codeDetailReadBtn").on("click", function () {
 
+    $.ajax({
+      type: "GET",
+      url: "/codeDetails/" + $("#codeGroupCode").val() + "/" + $("#codeValue").val(),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function (data) {
+        alert(JSON.stringify(data));
+
+        $("#codeGroupCode").val(data.groupCode);
+        $("#codeValue").val(data.codeValue);
+        $("#codeName").val(data.codeName);
+      },
+      error: function (data) {
+        alert(data);
+      }
+    })
+
   });
 
   // 등록
@@ -53,20 +70,54 @@ $(document).ready(function () {
 
   // 삭제
   $("#codeDetailDeleteBtn").on("click", function () {
+    $.ajax({
+      type: "DELETE",
+      url: "/codeDetails/" + $("#codeGroupCode").val() + "/" + $("#codeValue").val(),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function (data) {
+        alert(data);
+      },
+      error: function (data) {
+        alert(data);
+      }
+    })
 
 
   });
 
   // 수정
   $("#codeDetailModifyBtn").on("click", function () {
+    let codeGroupCode = $("#codeGroupCode").val();
+    let codeValue = $("#codeValue").val();
+    let codeName = $("#codeName").val();
 
+    let codeGroupObject = {
+      groupCode: codeGroupCode,
+      codeValue: codeValue,
+      codeName: codeName
+    };
+
+    $.ajax({
+      type: "PUT",
+      url: "/codeDetails/" + codeGroupCode + "/" + codeValue,
+      data: JSON.stringify(codeGroupObject),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function (data) {
+        alert(data);
+      },
+      error: function (data) {}
+    })
 
   });
 
 
   // 리셋
   $("#codeDetailResetBtn").on("click", function () {
-
+    $("#codeGroupCode").val("");
+    $("#codeValue").val("");
+    $("#codeName").val("");
   });
 
   // 초기값 로딩

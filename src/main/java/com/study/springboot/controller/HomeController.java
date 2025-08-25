@@ -20,11 +20,10 @@ public class HomeController {
         String formattedDate = now.format(formatter);
         model.addAttribute("serverTime", formattedDate);
 
-
         return "home";
     }
 
-    @GetMapping("/codeGroupHome")
+    @GetMapping("/codeGroup")
     public String codeGroupHome(Locale locale, Model model) {
 
         LocalDateTime now = LocalDateTime.now();
@@ -33,11 +32,10 @@ public class HomeController {
         String formattedDate = now.format(formatter);
         model.addAttribute("serverTime", formattedDate);
 
-
-        return "codeGroupHome";
+        return "codeGroup";
     }
 
-    @GetMapping("/codeDetailHome")
+    @GetMapping("/codeDetail")
     public String codeDetailHome(Locale locale, Model model) {
 
         LocalDateTime now = LocalDateTime.now();
@@ -46,7 +44,6 @@ public class HomeController {
         String formattedDate = now.format(formatter);
         model.addAttribute("serverTime", formattedDate);
 
-
-        return "codeDetailHome";
+        return "codeDetail";
     }
 }

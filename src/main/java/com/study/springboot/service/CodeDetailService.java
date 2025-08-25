@@ -9,4 +9,10 @@ public interface CodeDetailService{
     void register(CodeDetail codeDetail) throws Exception;
 
     List<CodeDetail> list() throws Exception;
+
+    CodeDetail read(CodeDetail codeDetail) throws Exception;
+
+    void modify(CodeDetail codeDetail) throws Exception;
+
+    void remove(CodeDetail codeDetail) throws Exception;
 }
