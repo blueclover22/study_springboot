@@ -8,4 +8,7 @@ public interface CodeService {
 
     // 코드 그룹 목록 조회
     public List<CodeLabelValue> getCodeGroupList() throws Exception;
+
+    // 상세 코드 목록 조회
+    public List<CodeLabelValue> getCodeList(String groupCode) throws Exception;
 }

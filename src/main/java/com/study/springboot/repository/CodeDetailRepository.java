@@ -11,4 +11,7 @@ public interface CodeDetailRepository extends JpaRepository<CodeDetail, CodeDeta
 
     @Query("select max(sortSeq) from CodeDetail where groupCode = ?1")
     public List<Object[]> getMaxSortSeq(String groupCode);
+
+    @Query("select cd from CodeDetail cd where cd.groupCode = ?1 order by cd.sortSeq asc")
+    public List<CodeDetail> getCodeList(String groupCode);
 }

@@ -27,7 +27,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_no")
-    private String userNo;
+    private Long userNo;
 
     @NotBlank
     @Column(nullable = false, length = 50)

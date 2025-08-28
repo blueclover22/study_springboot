@@ -46,4 +46,16 @@ public class HomeController {
 
         return "codeDetail";
     }
+
+    @GetMapping("/member")
+    public String memberHome(Locale locale, Model model) {
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String formattedDate = now.format(formatter);
+        model.addAttribute("serverTime", formattedDate);
+
+        return "member";
+    }
 }

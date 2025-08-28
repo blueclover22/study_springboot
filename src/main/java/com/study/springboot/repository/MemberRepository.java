@@ -9,7 +9,7 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
     //목록 조회
-    @Query("select m.userNo, m.userId, m.userName, cd.codeName, m.coin, m.regDate"
+    @Query("select m.userNo, m.userId, m.userPw, m.userName, cd.codeName, m.coin, m.regDate"
         + " from Member m"
         + " inner join CodeDetail cd on cd.codeValue = m.job"
         + " inner join CodeGroup cg on cg.groupCode = cd.groupCode"

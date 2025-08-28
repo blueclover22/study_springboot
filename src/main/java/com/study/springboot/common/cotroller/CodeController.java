@@ -27,4 +27,14 @@ public class CodeController {
 
         return new ResponseEntity<>(service.getCodeGroupList(), HttpStatus.OK);
     }
+
+    @GetMapping("/job")
+    public ResponseEntity<List<CodeLabelValue>> getJobList() throws Exception {
+
+        String classCode = "A01";
+
+        List<CodeLabelValue> jobList = service.getCodeList(classCode);
+
+        return new ResponseEntity<>(jobList, HttpStatus.OK);
+    }
 }
