@@ -3,12 +3,227 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+  <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
   <title>Home</title>
 </head>
+
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/app/login.js"></script>
+<script src="/js/app/code-group.js"></script>
+<script src="/js/app/code-detail.js"></script>
+<script src="/js/app/member.js"></script>
+<script src="/js/app/setup-admin.js"></script>
+
 <body>
-<h1>Home</h1>
-  <p>Welcome to the home page!</p>
-  <p th:text="${serverTime}"> time</p>
+<h1>Login</h1>
+<h2 th:text="#{common.homeWelcome}"></h2>
+
+<p th:text="${serverTime}"> time</p>
+<hr>
+<h3>Login</h3>
+
+<table>
+  <tr>
+    <td>
+      <label for="userId">userId</label>
+      <input type="text" id="userId" name="userId" value="test">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="password">password</label>
+      <input type="password" id="password" name="password" value="1234">
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button id="loginBtn">LOGIN</button>
+  <button id="myInfoBtn">myInfoBtn</button>
+</div>
+
+<hr>
+<h3>member</h3>
+
+<table>
+  <tr>
+    <td><label for="userNo">userNo</label></td>
+    <td><input type="text" value="" id="userNo"></td>
+  </tr>
+
+  <tr>
+    <td><label for="memberId">userId</label></td>
+    <td><input type="text" value="" id="memberId"></td>
+  </tr>
+
+  <tr>
+    <td><label for="memberPw">userPw</label></td>
+    <td><input type="text" value="" id="memberPw"></td>
+  </tr>
+
+  <tr>
+    <td><label for="memberName">userName</label></td>
+    <td><input type="text" value="" id="memberName"></td>
+  </tr>
+
+  <tr>
+    <td><label for="job">job</label></td>
+    <td><select id="job"></select></td>
+  </tr>
+
+  <tr>
+    <td>auth—1</td>
+    <td>
+      <select id="memberAuth0">
+        <option value="" selected="selected">select</option>
+        <option value="ROLE_USER">사용자</option>
+        <option value="ROLE_MEMBER">회원</option>
+        <option value="ROLE_ADMIN">관리자</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td>auth-2</td>
+    <td>
+      <select id="memberAuth1">
+        <option value="" selected="selected">select</option>
+        <option value="ROLE_USER">사용자</option>
+        <option value="ROLE_MEMBER">회원</option>
+        <option value="ROLE_ADMIN">관리자</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td>auth-3</td>
+    <td>
+      <select id="memberAuth2">
+        <option value="" selected="selected">select</option>
+        <option value="ROLE_USER">사용자</option>
+        <option value="ROLE_MEMBER">회원</option>
+        <option value="ROLE_ADMIN">관리자</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button id="memberListBtn">LIST</button>
+  <button id="memberReadBtn">READ</button>
+  <button id="memberRegisterBtn">REGISTER</button>
+  <button id="memberDeleteBtn">DELETE</button>
+  <button id="memberModifyBtn">MODIFY</button>
+  <button id="memberResetBtn">RESET</button>
+</div>
+
+<hr>
+<h3>setup admin</h3>
+<table>
+
+  <tr>
+    <td>
+      <label for="adminId">adminId</label>
+    </td>
+    <td>
+      <input type="text" id="adminId" name="adminId" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="adminPw">adminPw</label>
+    </td>
+    <td>
+      <input type="text" id="adminPw" name="adminPw" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="adminName">adminName</label>
+    </td>
+    <td>
+      <input type="text" id="adminName" name="adminName" value="">
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button id="adminRegisterBtn">REGISTER</button>
+  <button id="adminResetBtn">RESET</button>
+</div>
+
+<hr>
+<h3>CodeGroup</h3>
+
+<table>
+  <tr>
+    <td>
+      <label for="groupCode">CodeGroup</label>
+    </td>
+    <td>
+      <input type="text" id="groupCode" name="groupCode" value="">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label for="groupName">Name</label>
+    </td>
+    <td>
+      <input type="text" id="groupName" name="groupName" value="">
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button id="codeGroupListBtn">LIST</button>
+  <button id="codeGroupReadBtn">READ</button>
+  <button id="codeGroupRegisterBtn">REGISTER</button>
+  <button id="codeGroupDeleteBtn">DELETE</button>
+  <button id="codeGroupModifyBtn">MODIFY</button>
+  <button id="codeGroupResetBtn">RESET</button>
+</div>
+
+<hr>
+<h3>CodeDetail</h3>
+
+<table>
+  <tr>
+    <td>
+      <label for="codeGroupCode">groupCode</label>
+    </td>
+    <td>
+      <select id="codeGroupCode" name="codeGroupCode"></select>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label for="codeValue">codeValue</label>
+    </td>
+    <td>
+      <input type="text" id="codeValue" name="codeValue" value="">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label for="codeName">codeName</label>
+    </td>
+    <td>
+      <input type="text" id="codeName" name="codeName" value="">
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button id="codeDetailListBtn">LIST</button>
+  <button id="codeDetailReadBtn">READ</button>
+  <button id="codeDetailRegisterBtn">REGISTER</button>
+  <button id="codeDetailDeleteBtn">DELETE</button>
+  <button id="codeDetailModifyBtn">MODIFY</button>
+  <button id="codeDetailResetBtn">RESET</button>
+</div>
+
 </body>
 </html>

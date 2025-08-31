@@ -3,8 +3,11 @@ $(document).ready(function () {
   $("#memberListBtn").on("click", function () {
     $.ajax({
       type: "GET",
-      url: "/members",
+      url: "/users",
       contentType: "application/json; charset=utf-8",
+      headers: {
+        "Authorization": "Bearer " + ACCESS_TOKEN
+      },
       dataType: "json",
       success: function (data) {
         alert(JSON.stringify(data));
@@ -19,14 +22,14 @@ $(document).ready(function () {
   $("#memberReadBtn").on("click", function () {
     $.ajax({
       type: "GET",
-      url: "/members/" + $("#userNo").val(),
+      url: "/users/" + $("#userNo").val(),
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function (data) {
         alert(JSON.stringify(data));
-        $("#userId").val(data.userId);
-        $("#userName").val(data.userName);
-        $("#userPw").val(data.userPw);
+        $("#memberId").val(data.userId);
+        $("#memberName").val(data.userName);
+        $("#memberPw").val(data.userPw);
         $("#job").val(data.job);
         if (data.authList[0]) {
           $("#memberAuth0").val(data.authList[0].auth);
@@ -46,15 +49,15 @@ $(document).ready(function () {
   $("#memberRegisterBtn").on("click", function () {
 
     let userObject = {
-      userId: $("#userId").val(),
-      userPw: $("#userPw").val(),
-      userName: $("#userName").val(),
+      userId: $("#memberId").val(),
+      userPw: $("#memberPw").val(),
+      userName: $("#memberName").val(),
       job: $("#job").val()
     }
 
     $.ajax({
       type: "POST",
-      url: "/members",
+      url: "/users",
       data: JSON.stringify(userObject),
       contentType: "application/json; charset=utf-8",
       dataType: "json",
@@ -70,8 +73,11 @@ $(document).ready(function () {
   $("#memberDeleteBtn").on("click", function () {
     $.ajax({
       type: "DELETE",
-      url: "/members/" + $("#userNo").val(),
+      url: "/users/" + $("#userNo").val(),
       contentType: "application/json; charset=utf-8",
+      headers: {
+        "Authorization": "Bearer " + ACCESS_TOKEN
+      },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
@@ -88,9 +94,9 @@ $(document).ready(function () {
 
     let userNoVal = $("#userNo").val();
     let userObject = {
-      userId: $("#userId").val(),
-      userPw: $("#userPw").val(),
-      userName: $("#userName").val(),
+      userId: $("#memberId").val(),
+      userPw: $("#memberPw").val(),
+      userName: $("#memberName").val(),
       job: $("#job").val(),
 
       authList: [
@@ -111,7 +117,7 @@ $(document).ready(function () {
 
     $.ajax({
       type: "PUT",
-      url: "/members/" + userNoVal,
+      url: "/users/" + userNoVal,
       data: JSON.stringify(userObject),
       contentType: "application/json; charset=utf-8",
       dataType: "json",
@@ -127,9 +133,9 @@ $(document).ready(function () {
   });
 
   $("#memberResetBtn").on("click", function () {
-    $("#userId").val("");
-    $("#userPw").val("");
-    $("#userName").val("");
+    $("#memberId").val("");
+    $("#memberPw").val("");
+    $("#memberName").val("");
     $("#job").val("");
     $("#memberAuth0").val("");
     $("#memberAuth1").val("");

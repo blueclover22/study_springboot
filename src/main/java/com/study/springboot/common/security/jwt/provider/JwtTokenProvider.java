@@ -5,6 +5,7 @@ import com.study.springboot.domain.CustomUser;
 import com.study.springboot.domain.Member;
 import com.study.springboot.prop.ShopProperties;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -32,13 +33,13 @@ public class JwtTokenProvider {
         String secretKey = properties.getSecretKey();
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
 
-        Jws<Claims> parsedToken = Jwts.parser()
+        Jwt<JwsHeader, Claims> parsedToken = Jwts.parser()
             .verifyWith(key)
             .build()
-            .parseClaimsJws(token);
+            .parseSignedClaims(token);
 
         // 책 기반: "uno" claim에서 userNo 추출
-        String userNoStr = (String) parsedToken.getBody().get("uno");
+        String userNoStr = (String) parsedToken.getPayload().get("uno");
         long userNo = Long.parseLong(userNoStr);
 
         return userNo;
@@ -74,12 +75,12 @@ public class JwtTokenProvider {
                 SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
 
                 // JWT 토큰 파싱
-                Jws<Claims> parsedToken = Jwts.parser()
+                Jwt<JwsHeader, Claims> parsedToken = Jwts.parser()
                     .verifyWith(key)
                     .build()
-                    .parseClaimsJws(token);
+                    .parseSignedClaims(token);
 
-                Claims claims = parsedToken.getBody();
+                Claims claims = parsedToken.getPayload();
 
                 // JWT에서 사용자 정보 추출 (책 기반 claim 이름 사용)
                 String userNo = (String) claims.get("uno");
@@ -132,12 +133,12 @@ public class JwtTokenProvider {
             String secretKey = properties.getSecretKey();
             SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
 
-            Jws<Claims> claims = Jwts.parser()
+            Jwt<JwsHeader, Claims> claims = Jwts.parser()
                 .verifyWith(key)
                 .build()
-                .parseClaimsJws(jwtToken);
+                .parseSignedClaims(jwtToken);
 
-            return !claims.getBody().getExpiration().before(new Date());
+            return !claims.getPayload().getExpiration().before(new Date());
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT token", e);
             return false;

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -19,7 +20,7 @@ import java.util.Locale;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/members")
+@RequestMapping("/users")
 public class MemberController {
 
     private final MemberService service;
@@ -38,6 +39,7 @@ public class MemberController {
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<Member>> list() throws Exception {
         return new ResponseEntity<>(service.list(), HttpStatus.OK);
@@ -48,6 +50,7 @@ public class MemberController {
         return new ResponseEntity<>(service.read(userNo), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
     @PutMapping("/{userNo}")
     public ResponseEntity<Member> modify(@PathVariable("userNo") Long userNo, @Validated @RequestBody Member member) throws Exception {
 
@@ -57,6 +60,7 @@ public class MemberController {
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{userNo}")
     public ResponseEntity<Void> remove(@PathVariable("userNo") Long userNo) throws Exception {
         service.remove(userNo);
@@ -82,6 +86,7 @@ public class MemberController {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
     @GetMapping("/myInfo")
     public ResponseEntity<Member> getMyInfo(@AuthenticationPrincipal CustomUser customUser) throws Exception {
         Long userNo = customUser.getUserNo();

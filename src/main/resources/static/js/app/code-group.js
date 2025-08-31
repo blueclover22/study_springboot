@@ -6,6 +6,9 @@ $(document).ready(function () {
       type: "GET",
       url: "/codeGroups",
       contentType: "application/json; charset=utf-8",
+      headers: {
+        "Authorization": "Bearer " + ACCESS_TOKEN
+      },
       dataType: "json",
       success: function (data) {
         alert(JSON.stringify(data));
@@ -25,6 +28,9 @@ $(document).ready(function () {
       type: "GET",
       url: "/codeGroups/" + codeGroupCode,
       contentType: "application/json; charset=utf-8",
+      headers: {
+        "Authorization": "Bearer " + ACCESS_TOKEN
+      },
       dataType: "json",
       success: function (data) {
         alert(JSON.stringify(data));
@@ -53,6 +59,9 @@ $(document).ready(function () {
       url: "/codeGroups",
       data: JSON.stringify(codeGroupObject),
       contentType: "application/json; charset=utf-8",
+      headers: {
+        "Authorization": "Bearer " + ACCESS_TOKEN
+      },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
@@ -71,6 +80,9 @@ $(document).ready(function () {
       type: "DELETE",
       url: "/codeGroups/" + $("#groupCode").val(),
       contentType: "application/json; charset=utf-8",
+      headers: {
+        "Authorization": "Bearer " + ACCESS_TOKEN
+      },
       dataType: "json",
       success: function (data) {
         alert(data);
@@ -97,6 +109,9 @@ $(document).ready(function () {
       url: "/codeGroups/" + groupCode,
       data: JSON.stringify(codeGroupObject),
       contentType: "application/json; charset=utf-8",
+      headers: {
+        "Authorization": "Bearer " + ACCESS_TOKEN
+      },
       dataType: "json",
       success: function (data) {
         alert(data);

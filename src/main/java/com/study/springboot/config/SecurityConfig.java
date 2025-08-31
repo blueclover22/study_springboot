@@ -6,11 +6,13 @@ import com.study.springboot.common.security.jwt.filter.JwtRequestFilter;
 import com.study.springboot.common.security.jwt.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,6 +30,7 @@ import java.util.Arrays;
 @Slf4j
 @EnableWebSecurity
 @Configuration
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -35,15 +38,24 @@ public class SecurityConfig {
     private final CustomUserDetailService customUserDetailsService;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration) throws Exception {
 
         http
-            .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .requestMatchers("/").permitAll() //
+                .requestMatchers("/login").permitAll() //
+                .requestMatchers("/codes/**").permitAll() // 코드 관련 API 허용
+                .requestMatchers("/users/**").permitAll() // 회원 관련 API 허용
+                .requestMatchers("/codeGroups/**").hasRole("ADMIN") // 코드그룹은 관리자만
+                .requestMatchers("/codeDetails/**").hasRole("ADMIN") // 코드그룹은 관리자만
+                .anyRequest().authenticated() // 나머지는 인증 필요
+            )
             .formLogin(formLogin -> formLogin.disable())
             .httpBasic(httpBasic -> httpBasic.disable())
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .addFilterAt(new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration()), tokenProvider), UsernamePasswordAuthenticationFilter.class)
+            .addFilterAt(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager(), tokenProvider), UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -102,8 +114,4 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    @Bean
-    public AuthenticationConfiguration authenticationConfiguration() {
-        return new AuthenticationConfiguration();
-    }
 }
