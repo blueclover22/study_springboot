@@ -1,16 +1,20 @@
 package com.study.springboot.controller;
 
+import com.study.springboot.domain.CustomUser;
 import com.study.springboot.domain.Member;
 import com.study.springboot.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,6 +25,8 @@ public class MemberController {
     private final MemberService service;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final MessageSource messageSource;
 
     @PostMapping
     public ResponseEntity<Member> register(@Validated @RequestBody Member member) throws Exception {
@@ -55,5 +61,35 @@ public class MemberController {
     public ResponseEntity<Void> remove(@PathVariable("userNo") Long userNo) throws Exception {
         service.remove(userNo);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/setup", produces = "text/plain;charset=UTF-8")
+    public ResponseEntity<String> setupAdmin(@Validated @RequestBody Member member) throws Exception {
+
+        if (service.countAll() == 0) {
+            String inputPassword = member.getUserPw();
+            member.setUserPw(passwordEncoder.encode(inputPassword));
+
+            member.setJob("00");
+
+            service.setupAdmin(member);
+
+            return new ResponseEntity<>("Admin Setup Success", HttpStatus.OK);
+        }
+
+        String message = messageSource.getMessage("common.cannotSetupAdmin", null, Locale.KOREAN);
+
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/myInfo")
+    public ResponseEntity<Member> getMyInfo(@AuthenticationPrincipal CustomUser customUser) throws Exception {
+        Long userNo = customUser.getUserNo();
+
+        Member member = service.read(userNo);
+        member.setUserPw("");
+
+        return new ResponseEntity<>(member, HttpStatus.OK);
+
     }
 }

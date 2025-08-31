@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+  <title>Home</title>
+</head>
+
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/app/code-group.js"></script>
+<script src="/js/app/code-detail.js"></script>
+<script src="/js/app/setup-admin.js.js"></script>
+
+<body>
+<h1>setup admin</h1>
+<h2 th:text="#{common.homeWelcome}"></h2>
+
+<p th:text="${serverTime}"> time</p>
+<hr>
+<h3>setup admin</h3>
+
+<table>
+
+</body>
+</html>
