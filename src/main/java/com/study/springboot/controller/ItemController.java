@@ -1,33 +1,30 @@
 package com.study.springboot.controller;
 
-import java.io.File;
-import java.util.List;
-import java.util.UUID;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.study.springboot.domain.CustomUser;
+import com.study.springboot.domain.Item;
+import com.study.springboot.domain.Member;
+import com.study.springboot.prop.ShopProperties;
+import com.study.springboot.service.ItemService;
+import com.study.springboot.service.MemberService;
+import com.study.springboot.service.UserItemService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.springboot.domain.Item;
-import com.study.springboot.prop.ShopProperties;
-import com.study.springboot.service.ItemService;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.File;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -37,6 +34,11 @@ public class ItemController {
 
     private final ItemService itemService;
     private final ShopProperties shopProperties;
+
+    private final MemberService memberService;
+    private final UserItemService userItemService;
+
+    private final MessageSource messageSource;
 
     @GetMapping
     public ResponseEntity<List<Item>> list() throws Exception {
@@ -51,8 +53,8 @@ public class ItemController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Item> register(@RequestPart("item") String itemString,
-            @RequestPart("file") MultipartFile originalImageFile,
-            @RequestPart("file2") MultipartFile previewImageFile) throws Exception {
+                                         @RequestPart("file") MultipartFile originalImageFile,
+                                         @RequestPart("file2") MultipartFile previewImageFile) throws Exception {
 
         Item item = new ObjectMapper().readValue(itemString, Item.class);
 
@@ -106,9 +108,9 @@ public class ItemController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{itemId}")
     public ResponseEntity<Item> modify(@PathVariable("itemId") Long itemId,
-            @RequestPart("item") String itemString,
-            @RequestPart(value = "file", required = false) MultipartFile originalImageFile,
-            @RequestPart(value = "file2", required = false) MultipartFile previewImageFile) throws Exception {
+                                       @RequestPart("item") String itemString,
+                                       @RequestPart(value = "file", required = false) MultipartFile originalImageFile,
+                                       @RequestPart(value = "file2", required = false) MultipartFile previewImageFile) throws Exception {
 
         Item item = new ObjectMapper().readValue(itemString, Item.class);
         item.setItemId(itemId);
@@ -225,6 +227,7 @@ public class ItemController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/download/{itemId}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable("itemId") Long itemId) throws Exception {
+
         ResponseEntity<byte[]> responseEntity = null;
 
         String fullName = itemService.getPicture(itemId);
@@ -239,7 +242,8 @@ public class ItemController {
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
             headers.add("Content-Disposition",
-                    "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO_8859_1") + "\"");
+                "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"),
+                    "ISO_8859_1") + "\"");
 
             responseEntity = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK);
 
@@ -277,6 +281,24 @@ public class ItemController {
             }
         }
         return null;
+    }
+
+    @GetMapping(value = "/buy/{itemId}", produces = "text/plain; charset=UTF-8")
+    public ResponseEntity<String> buy(@PathVariable("itemId") Long itemId, @AuthenticationPrincipal CustomUser customUser) throws Exception {
+
+        Long userNo = customUser.getUserNo();
+
+        Member member = memberService.read(userNo);
+        member.setCoin(memberService.getCoin(userNo));
+
+        Item item = itemService.read(itemId);
+
+        userItemService.register(member, item);
+
+        String message = messageSource.getMessage("item.purchaseComplete", null, Locale.KOREAN);
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+
     }
 
 }

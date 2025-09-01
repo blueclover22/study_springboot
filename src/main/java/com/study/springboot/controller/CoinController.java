@@ -1,24 +1,19 @@
 package com.study.springboot.controller;
 
-import java.util.List;
-import java.util.Locale;
-
+import com.study.springboot.domain.ChargeCoin;
+import com.study.springboot.domain.CustomUser;
+import com.study.springboot.domain.PayCoin;
+import com.study.springboot.service.CoinService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.study.springboot.domain.ChargeCoin;
-import com.study.springboot.domain.CustomUser;
-import com.study.springboot.service.CoinService;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Locale;
 
 
 @RequiredArgsConstructor
@@ -33,7 +28,7 @@ public class CoinController {
     @PreAuthorize("hasRole('MEMBER')")
     @PostMapping(value = "/charge/{amount}", produces = "text/plain; charset=utf8")
     public ResponseEntity<String> charge(@PathVariable("amount") int amount,
-            @AuthenticationPrincipal CustomUser customUser) throws Exception {
+                                         @AuthenticationPrincipal CustomUser customUser) throws Exception {
         Long userNo = customUser.getUserNo();
 
         ChargeCoin chargeCoin = new ChargeCoin();
@@ -51,6 +46,15 @@ public class CoinController {
     public ResponseEntity<List<ChargeCoin>> list(@AuthenticationPrincipal CustomUser customUser) throws Exception {
         Long userNo = customUser.getUserNo();
         return new ResponseEntity<>(service.list(userNo), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('MEMBER')")
+    @GetMapping("/pay")
+    public ResponseEntity<List<PayCoin>> listPayHistory(@AuthenticationPrincipal CustomUser customUser) throws Exception {
+
+        Long userNo = customUser.getUserNo();
+        return new ResponseEntity<>(service.listPayHistory(userNo), HttpStatus.OK);
+
     }
 
 }

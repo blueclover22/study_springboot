@@ -55,7 +55,7 @@ $(document).ready(function () {
     $("#coinAmount").val("");
   });
 
-  $("#coinPayBtn").on("click", function () {
+  $("#coinPayListBtn").on("click", function () {
     $.ajax({
       type: "GET",
       url: "/coins/pay/",
