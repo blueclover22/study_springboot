@@ -49,6 +49,19 @@ public class SecurityConfig {
                 .requestMatchers("/users/**").permitAll() // 회원 관련 API 허용
                 .requestMatchers("/codeGroups/**").hasRole("ADMIN") // 코드그룹은 관리자만
                 .requestMatchers("/codeDetails/**").hasRole("ADMIN") // 코드그룹은 관리자만
+                .requestMatchers(request ->
+                    request.getRequestURI().startsWith("/boards") && "GET".equals(request.getMethod())
+                ).permitAll()
+                .requestMatchers("/boards/**").hasAnyRole("MEMBER", "ADMIN")
+                .requestMatchers(request ->
+                    request.getRequestURI().startsWith("/notices") && "GET".equals(request.getMethod())
+                ).permitAll()
+                .requestMatchers("/notices/**").hasRole("ADMIN")
+                .requestMatchers(request ->
+                    request.getRequestURI().startsWith("/items") && "GET".equals(request.getMethod())
+                ).permitAll()
+                .requestMatchers("/items/**").hasRole("ADMIN")
+
                 .anyRequest().authenticated() // 나머지는 인증 필요
             )
             .formLogin(formLogin -> formLogin.disable())

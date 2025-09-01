@@ -1,7 +1,6 @@
 package com.study.springboot.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,30 +11,23 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-@JsonIgnoreProperties(value = "hibernateLazyInitializer")
 @Getter
 @Setter
+@EqualsAndHashCode(of = "noticeNo")
 @ToString
-@EqualsAndHashCode(of = {"groupCode", "codeValue"})
 @Entity
-@IdClass(CodeDetailId.class)
-@Table(name = "code_detail")
-public class CodeDetail {
-    @Id
-    @Column(length = 3)
-    private String groupCode;
+@Table(name = "notice")
+public class Notice {
 
     @Id
-    @Column(length = 3)
-    private String codeValue;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long noticeNo;
 
-    @Column(length = 30, nullable = false)
-    private String codeName;
+    @Column(length = 200, nullable = false)
+    private String title;
 
-    private int sortSeq;
-
-    @Column(length = 1)
-    private String useYn = "Y";
+    @Lob
+    private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @CreationTimestamp

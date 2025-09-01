@@ -38,7 +38,7 @@ public class JwtTokenProvider {
             .build()
             .parseSignedClaims(token);
 
-        // 책 기반: "uno" claim에서 userNo 추출
+        // "uno" claim에서 userNo 추출
         String userNoStr = (String) parsedToken.getPayload().get("uno");
         long userNo = Long.parseLong(userNoStr);
 
@@ -50,16 +50,15 @@ public class JwtTokenProvider {
         byte[] signingKey = getSigningKey();
         SecretKey key = Keys.hmacShaKeyFor(signingKey);
 
-        // 책의 로직을 최신 API로 변환
         String token = Jwts.builder()
             .header()
-            .add("typ", SecurityConstants.TOKEN_TYPE)  // 최신 API: header() 사용
+            .add("typ", SecurityConstants.TOKEN_TYPE)
             .and()
-            .expiration(new Date(System.currentTimeMillis() + 864000000))  // setExpiration → expiration
-            .claim("uno", "" + userNo)    // 책과 동일한 claim 이름
-            .claim("uid", userId)         // 책과 동일한 claim 이름
-            .claim("rol", roles)          // 책과 동일한 claim 이름
-            .signWith(key, Jwts.SIG.HS512)  // 최신 API: SignatureAlgorithm.HS512 → Jwts.SIG.HS512
+            .expiration(new Date(System.currentTimeMillis() + 864000000))
+            .claim("uno", "" + userNo)
+            .claim("uid", userId)
+            .claim("rol", roles)
+            .signWith(key, Jwts.SIG.HS512)
             .compact();
 
         return token;
@@ -82,7 +81,7 @@ public class JwtTokenProvider {
 
                 Claims claims = parsedToken.getPayload();
 
-                // JWT에서 사용자 정보 추출 (책 기반 claim 이름 사용)
+                // JWT에서 사용자 정보 추출
                 String userNo = (String) claims.get("uno");
                 String userId = (String) claims.get("uid");
 

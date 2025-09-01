@@ -12,4 +12,6 @@ import org.springframework.stereotype.Component;
 public class ShopProperties {
 
     private String secretKey;
+
+    private String uploadPath;
 }

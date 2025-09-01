@@ -13,6 +13,9 @@
 <script src="/js/app/code-detail.js"></script>
 <script src="/js/app/member.js"></script>
 <script src="/js/app/setup-admin.js"></script>
+<script src="/js/app/board.js"></script>
+<script src="/js/app/notice.js"></script>
+<script src="/js/app/item.js"></script>
 
 <body>
 <h1>Login</h1>
@@ -223,6 +226,182 @@
   <button id="codeDetailDeleteBtn">DELETE</button>
   <button id="codeDetailModifyBtn">MODIFY</button>
   <button id="codeDetailResetBtn">RESET</button>
+</div>
+
+<hr>
+<h3>Board</h3>
+
+<table>
+  <tr>
+    <td>
+      <label for="boardNo">boardNo</label>
+    </td>
+    <td>
+      <input type="text" id="boardNo" name="boardNo" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="boardTitle">boardTitle</label>
+    </td>
+    <td>
+      <input type="text" id="boardTitle" name="boardTitle" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="boardContent">boardContent</label>
+    </td>
+    <td>
+      <textarea id="boardContent" name="boardContent"></textarea>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label for="boardWriter">boardWriter</label>
+    </td>
+    <td>
+      <input type="text" id="boardWriter" name="boardWriter" value="">
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button id="boardListBtn">LIST</button>
+  <button id="boardReadBtn">READ</button>
+  <button id="boardRegisterBtn">REGISTER</button>
+  <button id="boardDeleteBtn">DELETE</button>
+  <button id="boardModifyBtn">MODIFY</button>
+  <button id="boardResetBtn">RESET</button>
+</div>
+
+<hr>
+<h3>Notice</h3>
+<table>
+  <tr>
+    <td>
+      <label for="noticeNo">noticeNo</label>
+    </td>
+    <td>
+      <input type="text" id="noticeNo" name="noticeNo" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="noticeTitle">noticeTitle</label>
+    </td>
+    <td>
+      <input type="text" id="noticeTitle" name="noticeTitle" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="noticeContent">noticeContent</label>
+    </td>
+    <td>
+      <textarea id="noticeContent" name="noticeContent"></textarea>
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button id="noticeListBtn">LIST</button>
+  <button id="noticeReadBtn">READ</button>
+  <button id="noticeRegisterBtn">REGISTER</button>
+  <button id="noticeDeleteBtn">DELETE</button>
+  <button id="noticeModifyBtn">MODIFY</button>
+  <button id="noticeResetBtn">RESET</button>
+</div>
+
+<hr>
+<h3>Item</h3>
+
+<table>
+  <tr>
+    <td>
+      <label for="itemId">itemId</label>
+    </td>
+    <td>
+      <input type="text" id="itemId" name="itemId" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="itemName">itemName</label>
+    </td>
+    <td>
+      <input type="text" id="itemName" name="itemName" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="itemPrice">itemPrice</label>
+    </td>
+    <td>
+      <input type="text" id="itemPrice" name="itemPrice" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="itemDescription">itemDescription</label>
+    </td>
+    <td>
+      <textarea id="itemDescription" name="itemDescription"></textarea>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="itemInputFile">original file</label>
+    </td>
+    <td>
+      <input type="file" id="itemInputFile" name="picture">
+    </td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td>
+      <div id="preview">
+        <img src="" width="210" height="50">
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="itemInputFile2">preview file</label>
+    </td>
+    <td>
+      <input type="file" id="itemInputFile2" name="picture">
+    </td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td>
+      <div id="preview2">
+        <img src="" width="210" height="50">
+      </div>
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button id="itemListBtn">LIST</button>
+  <button id="itemReadBtn">READ</button>
+  <button id="itemRegisterBtn">REGISTER</button>
+  <button id="itemDeleteBtn">DELETE</button>
+  <button id="itemModifyBtn">MODIFY</button>
+  <button id="itemResetBtn">RESET</button>
+  <button id="itemDownloadBtn">DOWNLOAD</button>
 </div>
 
 </body>

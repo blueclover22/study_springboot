@@ -33,7 +33,6 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String userId;
 
-
     @NotBlank
     @Column(nullable = false, length = 200)
     private String userPw;

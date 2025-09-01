@@ -1,41 +1,46 @@
 package com.study.springboot.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
-@JsonIgnoreProperties(value = "hibernateLazyInitializer")
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"groupCode", "codeValue"})
 @Entity
-@IdClass(CodeDetailId.class)
-@Table(name = "code_detail")
-public class CodeDetail {
-    @Id
-    @Column(length = 3)
-    private String groupCode;
+@Table(name = "item")
+public class Item {
 
     @Id
-    @Column(length = 3)
-    private String codeValue;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long itemId;
 
-    @Column(length = 30, nullable = false)
-    private String codeName;
+    @Column(length = 50, nullable = false)
+    private String itemName;
 
-    private int sortSeq;
+    private Integer price;
 
-    @Column(length = 1)
-    private String useYn = "Y";
+    @Column(length = 250)
+    private String description;
+
+    @Transient
+    private MultipartFile picture;
+
+    @Column(length = 200)
+    private String pictureUrl;
+
+    @Transient
+    private MultipartFile preview;
+
+    @Column(length = 200)
+    private String previewUrl;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @CreationTimestamp

@@ -34,7 +34,8 @@ public class CodeDetailController {
     }
 
     @GetMapping("/{groupCode}/{codeValue}")
-    public ResponseEntity<CodeDetail> read(@PathVariable("groupCode") String groupCode, @PathVariable("codeValue") String codeValue) throws Exception {
+    public ResponseEntity<CodeDetail> read(@PathVariable("groupCode") String groupCode,
+                                           @PathVariable("codeValue") String codeValue) throws Exception {
 
         CodeDetail codeDetail = new CodeDetail();
         codeDetail.setGroupCode(groupCode);
@@ -44,7 +45,9 @@ public class CodeDetailController {
     }
 
     @PutMapping("/{groupCode}/{codeValue}")
-    public ResponseEntity<CodeDetail> modify(@PathVariable("groupCode") String groupCode, @PathVariable("codeValue") String codeValue, @Validated @RequestBody CodeDetail codeDetail) throws Exception {
+    public ResponseEntity<CodeDetail> modify(@PathVariable("groupCode") String groupCode,
+                                             @PathVariable("codeValue") String codeValue,
+                                             @Validated @RequestBody CodeDetail codeDetail) throws Exception {
         codeDetail.setGroupCode(groupCode);
         codeDetail.setCodeValue(codeValue);
         service.modify(codeDetail);
@@ -52,7 +55,8 @@ public class CodeDetailController {
     }
 
     @DeleteMapping("/{groupCode}/{codeValue}")
-    public ResponseEntity<Void> remove(@PathVariable("groupCode") String groupCode, @PathVariable("codeValue") String codeValue) throws Exception {
+    public ResponseEntity<Void> remove(@PathVariable("groupCode") String groupCode,
+                                       @PathVariable("codeValue") String codeValue) throws Exception {
         CodeDetail codeDetail = new CodeDetail();
         codeDetail.setGroupCode(groupCode);
         codeDetail.setCodeValue(codeValue);

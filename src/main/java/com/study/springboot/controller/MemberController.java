@@ -52,7 +52,8 @@ public class MemberController {
 
     @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
     @PutMapping("/{userNo}")
-    public ResponseEntity<Member> modify(@PathVariable("userNo") Long userNo, @Validated @RequestBody Member member) throws Exception {
+    public ResponseEntity<Member> modify(@PathVariable("userNo") Long userNo,
+                                         @Validated @RequestBody Member member) throws Exception {
 
         member.setUserNo(userNo);
         service.modify(member);

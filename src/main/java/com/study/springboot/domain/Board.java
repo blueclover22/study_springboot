@@ -2,6 +2,7 @@ package com.study.springboot.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,26 +13,30 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "boardNo")
 @ToString
 @Entity
-@Table(name = "member_auth")
-public class MemberAuth {
+@Table(name = "board")
+public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userAuthNo;
+    private Long boardNo;
 
-    @Column(name = "user_no")
-    private Long userNo;
+    @Column(length = 200, nullable = false)
+    private String title;
 
-    @Column(length = 50)
-    private String auth;
+    @Column(length = 50, nullable = false)
+    private String writer;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Lob
+    private String content;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @CreationTimestamp
     private LocalDateTime regDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @UpdateTimestamp
     private LocalDateTime updDate;
 }
