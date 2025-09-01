@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -20,18 +19,8 @@ public class CodeDetailServiceImpl implements CodeDetailService{
     public void register(CodeDetail codeDetail) throws Exception {
         String groupCode = codeDetail.getGroupCode();
 
-        List<Object[]> rsList = repository.getMaxSortSeq(groupCode);
-
-        Integer max = 0;
-        if (rsList.size() > 0) {
-
-            Object[] obj = rsList.get(0);
-            System.out.println(Arrays.toString(obj));
-
-            if(obj != null && obj.length > 0){
-                max = (Integer) obj[0];
-            }
-        }
+        Integer maxValue = repository.getMaxSortSeq(groupCode);
+        int max = (maxValue == null) ? 0 : maxValue;
 
         codeDetail.setSortSeq(max + 1);
 

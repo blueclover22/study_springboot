@@ -29,7 +29,7 @@ $(document).ready(function () {
   $("#myInfoBtn").on("click", function () {
     $.ajax({
       type: "GET",
-      url: "/members/myInfo",
+      url: "/users/myInfo",
       contentType: "application/json; charset=utf-8",
       headers: {
         "Authorization": "Bearer " + ACCESS_TOKEN

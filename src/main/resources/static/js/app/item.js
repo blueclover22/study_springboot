@@ -28,11 +28,11 @@ $(document).ready(function () {
         $("#itemDescription").val(data.itemDescription);
 
         $("#preview").empty();
-        let str = "<img src='items/display?itemId=" + data.itemId + +"$timestamp=" + new Date().getTime() + "' width='210' height='240'>";
+        let str = "<img src='items/display?itemId=" + data.itemId + +"&timestamp=" + new Date().getTime() + "' width='210' height='240'>";
         $("#preview").append(str);
 
         $("#preview2").empty();
-        let str2 = "<img src='items/display?itemId=" + data.itemId + +"$timestamp=" + new Date().getTime() + "' width='210' height='240'>";
+        let str2 = "<img src='items/display?itemId=" + data.itemId + +"&timestamp=" + new Date().getTime() + "' width='210' height='240'>";
         $("#preview2").append(str2);
 
       },
@@ -55,7 +55,7 @@ $(document).ready(function () {
     let formData = new FormData();
     formData.append("file", file);
     formData.append("file2", file2);
-    formData.append("itemObject", JSON.stringify(itemObject));
+    formData.append("item", JSON.stringify(itemObject));
 
     $.ajax({
       type: "POST",
