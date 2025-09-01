@@ -54,4 +54,30 @@ $(document).ready(function () {
   $("#coinResetBtn").click(function () {
     $("#coinAmount").val("");
   });
+
+  $("#coinPayBtn").on("click", function () {
+    $.ajax({
+      type: "GET",
+      url: "/coins/pay/",
+      contentType: "application/json; charset=utf-8",
+      headers: {
+        Authorization: "Bearer " + ACCESS_TOKEN,
+      },
+      success: function (data) {
+        alert(JSON.stringify(data));
+      },
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        )
+      }
+    })
+  })
 });

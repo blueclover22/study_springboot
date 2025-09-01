@@ -197,7 +197,6 @@ $(document).ready(function () {
     req.onload = function (event) {
       if (req.status === 200) {
         let contentDisposition = req.getResponseHeader("Content-Disposition");
-        let type = req.getResponseHeader("Content-Type");
 
         let downloadFileName = "download"; // 기본값
         if (contentDisposition) {
@@ -226,4 +225,32 @@ $(document).ready(function () {
 
     req.send();
   });
+
+  $("#itemBuyBtn").on("click", function () {
+    $.ajax({
+      type: "GET",
+      url: "/items/buy/" + $("#itemId").val(),
+      contentType: "application/json; charset=utf-8",
+      headers: {
+        Authorization: "Bearer " + ACCESS_TOKEN,
+      },
+      dataType: "json",
+      success: function (data) {
+        alert("success : " + data);
+      },
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      }
+    })
+  })
+
 });
