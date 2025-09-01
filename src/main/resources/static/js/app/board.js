@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   $("#boardListBtn").on("click", function () {
     $.ajax({
       type: "GET",
@@ -9,10 +8,19 @@ $(document).ready(function () {
       success: function (data) {
         alert(JSON.stringify(data));
       },
-      error: function (data) {
-        alert("error" + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#boardReadBtn").on("click", function () {
@@ -27,17 +35,26 @@ $(document).ready(function () {
         $("#boardContent").val(data.boardContent);
         $("#boardWriter").val(data.boardWriter);
       },
-      error: function (data) {
-        alert("error" + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#boardRegisterBtn").on("click", function () {
     let boardObject = {
       boardTitle: $("#boardTitle").val(),
       boardContent: $("#boardContent").val(),
-      boardWriter: $("#boardWriter").val()
+      boardWriter: $("#boardWriter").val(),
     };
     $.ajax({
       type: "POST",
@@ -45,16 +62,25 @@ $(document).ready(function () {
       data: JSON.stringify(boardObject),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#boardDeleteBtn").on("click", function () {
@@ -63,16 +89,25 @@ $(document).ready(function () {
       url: "/boards/" + $("#boardNo").val() + "?writer=" + $("#boardWriter").val(),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#boardModifyBtn").on("click", function () {
@@ -81,7 +116,7 @@ $(document).ready(function () {
       boardNo: boardNo,
       boardTitle: $("#boardTitle").val(),
       boardContent: $("#boardContent").val(),
-      boardWriter: $("#boardWriter").val()
+      boardWriter: $("#boardWriter").val(),
     };
     $.ajax({
       type: "PUT",
@@ -89,16 +124,25 @@ $(document).ready(function () {
       data: JSON.stringify(boardObject),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#boardResetBtn").on("click", function () {
@@ -107,5 +151,4 @@ $(document).ready(function () {
     $("#boardWriter").val("");
     $("#boardNo").val("");
   });
-
-})
+});

@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   $("#itemListBtn").on("click", function () {
     $.ajax({
       type: "GET",
@@ -11,8 +10,8 @@ $(document).ready(function () {
       },
       error: function (data) {
         alert("error : " + data);
-      }
-    })
+      },
+    });
   });
 
   $("#itemReadBtn").on("click", function () {
@@ -28,25 +27,43 @@ $(document).ready(function () {
         $("#itemDescription").val(data.itemDescription);
 
         $("#preview").empty();
-        let str = "<img src='items/display?itemId=" + data.itemId + +"&timestamp=" + new Date().getTime() + "' width='210' height='240'>";
+        let str =
+          "<img src='items/display?itemId=" +
+          data.itemId +
+          +"&timestamp=" +
+          new Date().getTime() +
+          "' width='210' height='240'>";
         $("#preview").append(str);
 
         $("#preview2").empty();
-        let str2 = "<img src='items/display?itemId=" + data.itemId + +"&timestamp=" + new Date().getTime() + "' width='210' height='240'>";
+        let str2 =
+          "<img src='items/display?itemId=" +
+          data.itemId +
+          +"&timestamp=" +
+          new Date().getTime() +
+          "' width='210' height='240'>";
         $("#preview2").append(str2);
-
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#itemRegisterBtn").on("click", function () {
     let itemObject = {
       itemName: $("#itemName").val(),
       itemPrice: $("#itemPrice").val(),
-      itemDescription: $("#itemDescription").val()
+      itemDescription: $("#itemDescription").val(),
     };
 
     let file = $("input[name=picture]")[0].files[0];
@@ -65,14 +82,23 @@ $(document).ready(function () {
       contentType: false,
       dataType: "text",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
     });
   });
 
@@ -82,16 +108,25 @@ $(document).ready(function () {
       url: "/items/" + $("#itemId").val(),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#itemModifyBtn").on("click", function () {
@@ -100,7 +135,7 @@ $(document).ready(function () {
       itemId: itemId,
       itemName: $("#itemName").val(),
       itemPrice: $("#itemPrice").val(),
-      itemDescription: $("#itemDescription").val()
+      itemDescription: $("#itemDescription").val(),
     };
 
     let file = $("input[name=picture]")[0].files[0];
@@ -120,15 +155,24 @@ $(document).ready(function () {
       contentType: false,
       dataType: "text",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#itemResetBtn").on("click", function () {
@@ -142,7 +186,6 @@ $(document).ready(function () {
   });
 
   $("#itemDownloadBtn").on("click", function () {
-
     let req = new XMLHttpRequest();
 
     req.open("GET", "/items/download/" + $("#itemId").val(), true);
@@ -182,7 +225,5 @@ $(document).ready(function () {
     };
 
     req.send();
-
   });
-
-})
+});

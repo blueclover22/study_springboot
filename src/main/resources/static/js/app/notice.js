@@ -1,13 +1,11 @@
 $(document).ready(function () {
-
   $("#noticeListBtn").on("click", function () {
     $.getJSON("/notices", function (list) {
       alert(JSON.stringify(list));
-    })
+    });
   });
 
   $("#noticeReadBtn").on("click", function () {
-
     $.ajax({
       type: "GET",
       url: "/notices/" + $("#noticeNo").val(),
@@ -18,16 +16,25 @@ $(document).ready(function () {
         $("#noticeTitle").val(data.noticeTitle);
         $("#noticeContent").val(data.noticeContent);
       },
-      error: function (data) {
-      }
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
     });
   });
 
   $("#noticeRegisterBtn").on("click", function () {
-
     let noticeObject = {
       noticeTitle: $("#noticeTitle").val(),
-      noticeContent: $("#noticeContent").val()
+      noticeContent: $("#noticeContent").val(),
     };
 
     $.ajax({
@@ -36,17 +43,25 @@ $(document).ready(function () {
       data: JSON.stringify(noticeObject),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
     });
-
   });
 
   $("#noticeDeleteBtn").on("click", function () {
@@ -55,16 +70,25 @@ $(document).ready(function () {
       url: "/notices/" + $("#noticeNo").val(),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#noticeModifyBtn").on("click", function () {
@@ -72,7 +96,7 @@ $(document).ready(function () {
     let noticeObject = {
       noticeNo: noticeNo,
       noticeTitle: $("#noticeTitle").val(),
-      noticeContent: $("#noticeContent").val()
+      noticeContent: $("#noticeContent").val(),
     };
     $.ajax({
       type: "PUT",
@@ -80,16 +104,25 @@ $(document).ready(function () {
       data: JSON.stringify(noticeObject),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#noticeResetBtn").on("click", function () {
@@ -97,5 +130,4 @@ $(document).ready(function () {
     $("#noticeTitle").val("");
     $("#noticeContent").val("");
   });
-
-})
+});

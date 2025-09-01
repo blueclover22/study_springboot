@@ -1,22 +1,29 @@
 $(document).ready(function () {
-
   $("#memberListBtn").on("click", function () {
     $.ajax({
       type: "GET",
       url: "/users",
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert(JSON.stringify(data));
       },
-      error: function (data) {
-        alert(data);
-      }
-    })
-
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#memberReadBtn").on("click", function () {
@@ -41,19 +48,16 @@ $(document).ready(function () {
           $("#memberAuth2").val(data.authList[2].auth);
         }
       },
-    })
-
-
+    });
   });
 
   $("#memberRegisterBtn").on("click", function () {
-
     let userObject = {
       userId: $("#memberId").val(),
       userPw: $("#memberPw").val(),
       userName: $("#memberName").val(),
-      job: $("#job").val()
-    }
+      job: $("#job").val(),
+    };
 
     $.ajax({
       type: "POST",
@@ -64,10 +68,19 @@ $(document).ready(function () {
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#memberDeleteBtn").on("click", function () {
@@ -76,22 +89,28 @@ $(document).ready(function () {
       url: "/users/" + $("#userNo").val(),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
-
-
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#memberModifyBtn").on("click", function () {
-
     let userNoVal = $("#userNo").val();
     let userObject = {
       userId: $("#memberId").val(),
@@ -102,18 +121,18 @@ $(document).ready(function () {
       authList: [
         {
           userNo: userNoVal,
-          auth: $("#memberAuth0").val()
+          auth: $("#memberAuth0").val(),
         },
         {
           userNo: userNoVal,
-          auth: $("#memberAuth1").val()
+          auth: $("#memberAuth1").val(),
         },
         {
           userNo: userNoVal,
-          auth: $("#memberAuth2").val()
-        }
-      ]
-    }
+          auth: $("#memberAuth2").val(),
+        },
+      ],
+    };
 
     $.ajax({
       type: "PUT",
@@ -124,12 +143,19 @@ $(document).ready(function () {
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
-    })
-
-
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   $("#memberResetBtn").on("click", function () {
@@ -147,7 +173,6 @@ $(document).ready(function () {
     $(list).each(function () {
       let str = "<option value='" + this.value + "'>" + this.label + "</option>";
       $("#job").append(str);
-    })
+    });
   });
-
 });

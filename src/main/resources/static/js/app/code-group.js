@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   // 목록 조회
   $("#codeGroupListBtn").on("click", function () {
     $.ajax({
@@ -7,18 +6,25 @@ $(document).ready(function () {
       url: "/codeGroups",
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert(JSON.stringify(data));
       },
-      error: function (data) {
-        alert(data);
-      }
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
     });
-
-
   });
 
   // 상세조회
@@ -29,27 +35,33 @@ $(document).ready(function () {
       url: "/codeGroups/" + codeGroupCode,
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert(JSON.stringify(data));
         $("#groupName").val(data.groupName);
       },
-      error: function (data) {
-        alert(data);
-      }
-    })
-
-
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   // 등록
   $("#codeGroupRegisterBtn").on("click", function () {
-
     let codeGroupObject = {
       groupCode: $("#groupCode").val(),
-      groupName: $("#groupName").val()
+      groupName: $("#groupName").val(),
     };
 
     alert(JSON.stringify(codeGroupObject));
@@ -60,18 +72,25 @@ $(document).ready(function () {
       data: JSON.stringify(codeGroupObject),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert("success : " + data);
       },
-      error: function (data) {
-        alert("error : " + data);
-      }
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
     });
-
-
   });
 
   // 삭제
@@ -81,28 +100,34 @@ $(document).ready(function () {
       url: "/codeGroups/" + $("#groupCode").val(),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert(data);
       },
-      error: function (data) {
-        alert(data);
-      }
-    })
-
-
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   // 수정
   $("#codeGroupModifyBtn").on("click", function () {
-
     let groupCode = $("#groupCode").val();
     let codeGroupObject = {
       groupCode: groupCode,
-      groupName: $("#groupName").val()
-    }
+      groupName: $("#groupName").val(),
+    };
 
     $.ajax({
       type: "PUT",
@@ -110,17 +135,25 @@ $(document).ready(function () {
       data: JSON.stringify(codeGroupObject),
       contentType: "application/json; charset=utf-8",
       headers: {
-        "Authorization": "Bearer " + ACCESS_TOKEN
+        Authorization: "Bearer " + ACCESS_TOKEN,
       },
       dataType: "json",
       success: function (data) {
         alert(data);
       },
-      error: function (data) {
-        alert(data);
-      }
-    })
-
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
   });
 
   // 리셋
@@ -128,5 +161,4 @@ $(document).ready(function () {
     $("#groupCode").val("");
     $("#groupName").val("");
   });
-
 });

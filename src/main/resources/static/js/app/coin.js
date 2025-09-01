@@ -1,40 +1,8 @@
-let ACCESS_TOKEN = "";
-
 $(document).ready(function () {
-  $("#loginBtn").on("click", function () {
-    $.ajax({
-      type: "POST",
-      url: "/api/authenticate",
-      data: {
-        username: $("#userId").val(),
-        password: $("#password").val(),
-      },
-      success: function (data, textStatus, request) {
-        let responserHeader = request.getResponseHeader("Authorization");
-
-        ACCESS_TOKEN = responserHeader.substring(7);
-
-        alert("success : " + responserHeader + "");
-      },
-      error: function (xhr, status, error) {
-        alert(
-          "code: " +
-            xhr.status +
-            "\n" +
-            ", message: " +
-            xhr.responseText +
-            "\n" +
-            ", error: " +
-            error
-        );
-      },
-    });
-  });
-
-  $("#myInfoBtn").on("click", function () {
+  $("#coinChargeListBtn").on("click", function () {
     $.ajax({
       type: "GET",
-      url: "/users/myInfo",
+      url: "/coins",
       contentType: "application/json; charset=utf-8",
       headers: {
         Authorization: "Bearer " + ACCESS_TOKEN,
@@ -55,5 +23,35 @@ $(document).ready(function () {
         );
       },
     });
+  });
+
+  $("#coinChargeBtn").on("click", function () {
+    $.ajax({
+      type: "POST",
+      url: "/coins/charge/" + $("#coinAmount").val(),
+      contentType: "application/json; charset=utf-8",
+      headers: {
+        Authorization: "Bearer " + ACCESS_TOKEN,
+      },
+      success: function (data) {
+        alert(JSON.stringify(data));
+      },
+      error: function (xhr, status, error) {
+        alert(
+          "code: " +
+            xhr.status +
+            "\n" +
+            ", message: " +
+            xhr.responseText +
+            "\n" +
+            ", error: " +
+            error
+        );
+      },
+    });
+  });
+
+  $("#coinResetBtn").click(function () {
+    $("#coinAmount").val("");
   });
 });
