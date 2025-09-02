@@ -1,7 +1,8 @@
-package com.study.springboot.service;
+package com.study.springboot.service.impl;
 
 import com.study.springboot.domain.Notice;
 import com.study.springboot.repository.NoticeRepository;
+import com.study.springboot.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

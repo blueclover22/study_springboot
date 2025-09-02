@@ -1,7 +1,8 @@
-package com.study.springboot.service;
+package com.study.springboot.service.impl;
 
 import com.study.springboot.domain.Item;
 import com.study.springboot.repository.ItemRepository;
+import com.study.springboot.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

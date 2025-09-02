@@ -1,4 +1,4 @@
-package com.study.springboot.service;
+package com.study.springboot.service.impl;
 
 import com.study.springboot.common.exception.NotEnoughCoinException;
 import com.study.springboot.domain.Item;
@@ -8,6 +8,7 @@ import com.study.springboot.domain.UserItem;
 import com.study.springboot.repository.MemberRepository;
 import com.study.springboot.repository.PayCoinRepository;
 import com.study.springboot.repository.UserItemRepository;
+import com.study.springboot.service.UserItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

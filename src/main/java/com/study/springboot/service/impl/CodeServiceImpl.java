@@ -1,10 +1,11 @@
-package com.study.springboot.service;
+package com.study.springboot.service.impl;
 
 import com.study.springboot.domain.CodeDetail;
 import com.study.springboot.domain.CodeGroup;
 import com.study.springboot.dto.CodeLabelValue;
 import com.study.springboot.repository.CodeDetailRepository;
 import com.study.springboot.repository.CodeGroupRepository;
+import com.study.springboot.service.CodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

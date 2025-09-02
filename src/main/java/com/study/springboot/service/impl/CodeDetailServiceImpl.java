@@ -1,8 +1,9 @@
-package com.study.springboot.service;
+package com.study.springboot.service.impl;
 
 import com.study.springboot.domain.CodeDetail;
 import com.study.springboot.domain.CodeDetailId;
 import com.study.springboot.repository.CodeDetailRepository;
+import com.study.springboot.service.CodeDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class CodeDetailServiceImpl implements CodeDetailService{
+public class CodeDetailServiceImpl implements CodeDetailService {
 
     private final CodeDetailRepository repository;
 

@@ -1,8 +1,9 @@
-package com.study.springboot.service;
+package com.study.springboot.service.impl;
 
 import com.study.springboot.domain.Member;
 import com.study.springboot.domain.MemberAuth;
 import com.study.springboot.repository.MemberRepository;
+import com.study.springboot.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

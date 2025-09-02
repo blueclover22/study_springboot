@@ -1,7 +1,8 @@
-package com.study.springboot.service;
+package com.study.springboot.service.impl;
 
 import com.study.springboot.domain.CodeGroup;
 import com.study.springboot.repository.CodeGroupRepository;
+import com.study.springboot.service.CodeGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
