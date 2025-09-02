@@ -1,6 +1,8 @@
 package com.study.springboot.config;
 
+import com.study.springboot.common.security.CustomAccessDeniedHandler;
 import com.study.springboot.common.security.CustomUserDetailService;
+import com.study.springboot.common.security.RestAuthenticationEntryPoint;
 import com.study.springboot.common.security.jwt.filter.JwtAuthenticationFilter;
 import com.study.springboot.common.security.jwt.filter.JwtRequestFilter;
 import com.study.springboot.common.security.jwt.provider.JwtTokenProvider;
@@ -20,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -76,7 +79,10 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .addFilterAt(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager(), tokenProvider), UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class)
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .exceptionHandling(exceptionHandling -> exceptionHandling
+                .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                .accessDeniedHandler(accessDeniedHandler()));
 
         return http.build();
     }
@@ -131,6 +137,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 
 }

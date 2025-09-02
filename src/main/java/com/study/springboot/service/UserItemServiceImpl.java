@@ -1,5 +1,6 @@
 package com.study.springboot.service;
 
+import com.study.springboot.common.exception.NotEnoughCoinException;
 import com.study.springboot.domain.Item;
 import com.study.springboot.domain.Member;
 import com.study.springboot.domain.PayCoin;
@@ -46,6 +47,10 @@ public class UserItemServiceImpl implements UserItemService {
 
         int coin = memberEntity.getCoin();
         int amount = payCoin.getAmount();
+
+        if (coin < price) {
+            throw new NotEnoughCoinException("The coin is not enough.");
+        }
 
         memberEntity.setCoin(coin - amount);
 

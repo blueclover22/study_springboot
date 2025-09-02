@@ -34,7 +34,7 @@ public class BoardController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Board>> list(@RequestParam Long boardNo) throws Exception {
+    public ResponseEntity<List<Board>> list() throws Exception {
         return new ResponseEntity<>(service.list(), HttpStatus.OK);
     }
 

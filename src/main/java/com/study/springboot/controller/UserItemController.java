@@ -1,5 +1,6 @@
 package com.study.springboot.controller;
 
+import com.study.springboot.common.exception.NotMyItemException;
 import com.study.springboot.domain.CustomUser;
 import com.study.springboot.domain.UserItem;
 import com.study.springboot.prop.ShopProperties;
@@ -47,9 +48,15 @@ public class UserItemController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER')")
     @GetMapping("/download/{userItemNo}")
-    public ResponseEntity<byte[]> download(@PathVariable("userItemNo") Long userItemNo) throws Exception {
+    public ResponseEntity<byte[]> download(@PathVariable("userItemNo") Long userItemNo, @AuthenticationPrincipal CustomUser customUser) throws Exception {
 
         UserItem userItem = service.read(userItemNo);
+
+        Long userNo = customUser.getUserNo();
+        if (userItem.getUserNo() != userNo) {
+            throw new NotMyItemException("not my item");
+        }
+
 
         String fullName = userItem.getPictureUrl();
 
