@@ -9,6 +9,7 @@ import com.study.springboot.common.security.jwt.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,7 +42,7 @@ public class SecurityConfig {
     private final CustomUserDetailService customUserDetailsService;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration, MessageSource messageSource) throws Exception {
 
         http
             .authorizeHttpRequests(authorize -> authorize
@@ -82,7 +83,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .exceptionHandling(exceptionHandling -> exceptionHandling
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())
-                .accessDeniedHandler(accessDeniedHandler()));
+                .accessDeniedHandler(accessDeniedHandler(messageSource)));
 
         return http.build();
     }
@@ -140,8 +141,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
+    public AccessDeniedHandler accessDeniedHandler(MessageSource messageSource) {
+        return new CustomAccessDeniedHandler(messageSource);
     }
 
 }
