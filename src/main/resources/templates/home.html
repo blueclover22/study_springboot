@@ -18,6 +18,7 @@
 <script src="/js/app/item.js"></script>
 <script src="/js/app/coin.js"></script>
 <script src="/js/app/user-item.js"></script>
+<script src="/js/app/pds.js"></script>
 
 <body>
 <h1>Login</h1>
@@ -477,5 +478,53 @@
   <button id="userItemDownloadBtn">DOWNLOAD</button>
 </div>
 
+<hr>
+<h3>Pds</h3>
+
+<table>
+  <tr>
+    <td>
+      <label for="pdsItemId">pdsItemId</label>
+    </td>
+    <td>
+      <input type="text" id="pdsItemId" name="pdsItemId" value="">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label for="pdsItemName">pdsItemName</label>
+    </td>
+    <td>
+      <input type="text" id="pdsItemName" name="pdsItemName" value="">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label for="pdsItemDescription">pdsItemDescription</label>
+    </td>
+    <td>
+      <textarea id="pdsItemDescription" name="pdsItemDescription"></textarea>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label for="pdsInputFile">file</label>
+    </td>
+    <td>
+      <input type="file" id="pdsInputFile" name="pdsInputFile">
+      <div class="uploadedList"></div>
+    </td>
+  </tr>
+  </tr>
+</table>
+
+<div>
+  <button id="pdsItemListBtn">LIST</button>
+  <button id="pdsItemReadBtn">READ</button>
+  <button id="pdsItemRegisterBtn">REGISTER</button>
+  <button id="pdsItemDeleteBtn">DELETE</button>
+  <button id="pdsItemModifyBtn">MODIFY</button>
+  <button id="pdsItemResetBtn">RESET</button>
+</div>
 </body>
 </html>

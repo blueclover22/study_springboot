@@ -63,6 +63,10 @@ public class SecurityConfig {
                 .requestMatchers("/items/**").hasRole("ADMIN")
                 .requestMatchers("/coins/**").hasRole("MEMBER")
                 .requestMatchers("/userItems/**").hasAnyRole("MEMBER", "ADMIN")
+                .requestMatchers(request ->
+                    request.getRequestURI().startsWith("/pds") && "GET".equals(request.getMethod())
+                ).permitAll()
+                .requestMatchers("/pds/**").hasRole("ADMIN")
 
                 .anyRequest().authenticated() // 나머지는 인증 필요
             )
