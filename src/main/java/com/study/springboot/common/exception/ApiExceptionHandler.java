@@ -7,6 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -28,7 +30,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     private final MessageSource messageSource;
 
     @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
+    protected ResponseEntity<Object> handleExceptionInternal(
+            @NonNull Exception ex,
+            @Nullable Object body,
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode statusCode,
+            @NonNull WebRequest request) {
 
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
         apiErrorInfo.setMessage(ex.getMessage());
@@ -43,7 +50,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String message = messageSource.getMessage("item.notMyItem", null, Locale.KOREAN);
         apiErrorInfo.setMessage(message);
 
-        return super.handleExceptionInternal(ex, apiErrorInfo, null, HttpStatus.NOT_FOUND, request);
+        return super.handleExceptionInternal(ex, apiErrorInfo, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler
@@ -53,7 +60,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String message = messageSource.getMessage("coin.notEnoughCoin", null, Locale.KOREAN);
         apiErrorInfo.setMessage(message);
 
-        return super.handleExceptionInternal(ex, apiErrorInfo, null, HttpStatus.NOT_FOUND, request);
+        return super.handleExceptionInternal(ex, apiErrorInfo, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler
@@ -63,7 +70,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String message = messageSource.getMessage("common.accessDenied", null, Locale.KOREAN);
         apiErrorInfo.setMessage(message);
 
-        return super.handleExceptionInternal(ex, apiErrorInfo, null, HttpStatus.FORBIDDEN, request);
+        return super.handleExceptionInternal(ex, apiErrorInfo, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
     @ExceptionHandler
@@ -71,11 +78,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
         apiErrorInfo.setMessage(ex.getMessage());
 
-        return super.handleExceptionInternal(ex, apiErrorInfo, null, HttpStatus.INTERNAL_SERVER_ERROR, request);
+        return super.handleExceptionInternal(ex, apiErrorInfo, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR,
+                request);
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            @NonNull MethodArgumentNotValidException ex,
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
 
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
 
@@ -95,7 +107,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BindException.class)
-    protected ResponseEntity<Object> handleBindExceptionCustom(BindException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleBindExceptionCustom(BindException ex, HttpHeaders headers,
+            HttpStatusCode status, WebRequest request) {
 
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
         apiErrorInfo.setMessage(ex.getMessage());
@@ -112,6 +125,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             apiErrorInfo.addDetailInfo(fieldError.getField(), fieldError.getDefaultMessage());
         }
 
-        return super.handleExceptionInternal(ex, apiErrorInfo,headers, status, request);
+        return super.handleExceptionInternal(ex, apiErrorInfo, headers, status, request);
     }
 }
