@@ -70,7 +70,7 @@ public class PdsController {
         return new ResponseEntity<>(savedName, HttpStatus.OK);
     }
 
-    @GetMapping("/download}")
+    @GetMapping("/download")
     public ResponseEntity<byte[]> download(String fullName) throws Exception {
         ResponseEntity<byte[]> responseEntity = null;
 
