@@ -107,7 +107,7 @@ public class PdsServiceImpl implements PdsService {
 
         List<String> attachList = new ArrayList<>();
         for (PdsFile pdsFile : pdsFiles) {
-            attachList.add(pdsFile.setFullName());
+            attachList.add(pdsFile.getFullName());
         }
 
         return attachList;
