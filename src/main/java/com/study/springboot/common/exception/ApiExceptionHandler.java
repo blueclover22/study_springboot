@@ -37,6 +37,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             @NonNull HttpStatusCode statusCode,
             @NonNull WebRequest request) {
 
+        log.error("Exception occurred during request processing: {}", ex.getMessage(), ex);
+
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
         apiErrorInfo.setMessage(ex.getMessage());
 
@@ -45,6 +47,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> handleNotMyItemException(NotMyItemException ex, WebRequest request) {
+        log.warn("NotMyItemException occurred: {}", ex.getMessage());
+        
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
 
         String message = messageSource.getMessage("item.notMyItem", null, Locale.KOREAN);
@@ -55,6 +59,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> handleNotEnoughCoinException(NotEnoughCoinException ex, WebRequest request) {
+        log.warn("NotEnoughCoinException occurred: {}", ex.getMessage());
+        
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
 
         String message = messageSource.getMessage("coin.notEnoughCoin", null, Locale.KOREAN);
@@ -65,6 +71,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
+        log.warn("AccessDeniedException occurred: {}", ex.getMessage());
+        
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
 
         String message = messageSource.getMessage("common.accessDenied", null, Locale.KOREAN);
@@ -75,6 +83,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> handleSystemException(Exception ex, WebRequest request) {
+        log.error("System exception occurred: {}", ex.getMessage(), ex);
+        
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
         apiErrorInfo.setMessage(ex.getMessage());
 
@@ -88,6 +98,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             @NonNull HttpHeaders headers,
             @NonNull HttpStatusCode status,
             @NonNull WebRequest request) {
+
+        log.warn("Validation failed for request: {}", ex.getMessage());
 
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
 
@@ -109,6 +121,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BindException.class)
     protected ResponseEntity<Object> handleBindExceptionCustom(BindException ex, HttpHeaders headers,
             HttpStatusCode status, WebRequest request) {
+
+        log.warn("Bind exception occurred: {}", ex.getMessage());
 
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();
         apiErrorInfo.setMessage(ex.getMessage());
