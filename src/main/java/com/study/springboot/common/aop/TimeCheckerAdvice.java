@@ -19,7 +19,9 @@ public class TimeCheckerAdvice {
 
     private final PerformanceLogService service;
 
-    @Around("execution(* com.study.springboot.service.*Service*.*(..))")
+    // 서비스 메서드 실행 시간 측정 (단, PerformanceLogService는 제외하여 무한 루프 방지)
+    @Around("execution(* com.study.springboot.service.*Service*.*(..)) && " +
+            "!execution(* com.study.springboot.service.PerformanceLogService.*(..))")
     public Object timeLog(ProceedingJoinPoint joinPoint) throws Throwable {
 
         long start = System.currentTimeMillis();
@@ -27,9 +29,9 @@ public class TimeCheckerAdvice {
         Signature signature = joinPoint.getSignature();
         Object target = joinPoint.getTarget();
 
-        log.info("signature.getName() : {}", signature.getName());
-        log.info("signature.getDeclaringTypeName() : {}", signature.getDeclaringTypeName());
-        log.info("target : {}", target);
+        log.debug("signature.getName() : {}", signature.getName());
+        log.debug("signature.getDeclaringTypeName() : {}", signature.getDeclaringTypeName());
+        log.debug("target : {}", target);
 
         String signatureName = signature.getName();
         String signatureDeclaringTypeName = signature.getDeclaringTypeName();
@@ -40,12 +42,21 @@ public class TimeCheckerAdvice {
 
         long durationTime = end - start;
 
-        PerformanceLog performanceLog = new PerformanceLog();
-        performanceLog.setSignatureName(signatureName);
-        performanceLog.setSignatureTypeName(signatureDeclaringTypeName);
-        performanceLog.setDurationTime(durationTime);
+        // 성능 임계값 (100ms) 이상인 경우만 로그 저장
+        if (durationTime >= 100) {
+            PerformanceLog performanceLog = new PerformanceLog();
+            performanceLog.setSignatureName(signatureName);
+            performanceLog.setSignatureTypeName(signatureDeclaringTypeName);
+            performanceLog.setDurationTime(durationTime);
 
-        service.register(performanceLog);
+            try {
+                service.register(performanceLog);
+            } catch (Exception e) {
+                log.error("Failed to save performance log: {}", e.getMessage(), e);
+            }
+        }
+
+        log.debug("Method [{}] executed in {} ms", signatureName, durationTime);
 
         return result;
     }
