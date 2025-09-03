@@ -1,28 +1,27 @@
 package com.study.springboot.config;
 
 import com.study.springboot.common.interceptor.AccessLoggingInterceptor;
-import org.springframework.context.annotation.Bean;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@RequiredArgsConstructor
 public class InterceptorConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    private final AccessLoggingInterceptor accessLoggingInterceptor;
 
-        registry.addInterceptor(accessLogInterceptor())
+    @Override
+    public void addInterceptors(
+        @NonNull InterceptorRegistry registry) {
+
+        registry.addInterceptor(accessLoggingInterceptor)
             .addPathPatterns("/**")
             .excludePathPatterns("/resources/**")
             .excludePathPatterns("/users/**");
 
         WebMvcConfigurer.super.addInterceptors(registry);
-    }
-
-    @Bean
-    public HandlerInterceptor accessLogInterceptor() {
-        return new AccessLoggingInterceptor();
     }
 }

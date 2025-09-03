@@ -256,7 +256,7 @@ ALTER TABLE pay_coin_history MODIFY COLUMN upd_date DATETIME COMMENT '수정일�
 CREATE TABLE access_log
 (
     log_no BIGINT NOT NULL AUTO_INCREMENT,
-    request_url VARCHAR(200) NOT NULL ,
+    request_uri VARCHAR(200) NOT NULL ,
     class_name VARCHAR(100) NOT NULL ,
     class_simple_name VARCHAR(50) NOT NULL ,
     method_name VARCHAR(100) NOT NULL ,
@@ -268,7 +268,7 @@ CREATE TABLE access_log
 
 ALTER TABLE access_log COMMENT '시스템 접근 로그 테이블';
 ALTER TABLE access_log MODIFY COLUMN log_no BIGINT NOT NULL AUTO_INCREMENT COMMENT '로그번호';
-ALTER TABLE access_log MODIFY COLUMN request_url VARCHAR(200) NOT NULL COMMENT '요청 URL';
+ALTER TABLE access_log MODIFY COLUMN request_uri VARCHAR(200) NOT NULL COMMENT '요청 URI';
 ALTER TABLE access_log MODIFY COLUMN class_name VARCHAR(100) NOT NULL COMMENT '컨트롤러 클래스명';
 ALTER TABLE access_log MODIFY COLUMN class_simple_name VARCHAR(50) NOT NULL COMMENT '컨트롤러 클래스명 (요약)';
 ALTER TABLE access_log MODIFY COLUMN method_name VARCHAR(100) NOT NULL COMMENT '메서드명';
