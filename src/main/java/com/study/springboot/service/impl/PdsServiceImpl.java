@@ -36,7 +36,7 @@ public class PdsServiceImpl implements PdsService {
         for (String fileName : files) {
 
             PdsFile pdsFile = new PdsFile();
-            pdsFile.setFileName(fileName);
+            pdsFile.setFullName(fileName);
 
             pdsEntity.addItemFile(pdsFile);
         }
@@ -78,7 +78,7 @@ public class PdsServiceImpl implements PdsService {
 
             for (String fileName : files) {
                 PdsFile pdsFile = new PdsFile();
-                pdsFile.setFileName(fileName);
+                pdsFile.setFullName(fileName);
 
                 pdsEntity.addItemFile(pdsFile);
 
@@ -107,7 +107,7 @@ public class PdsServiceImpl implements PdsService {
 
         List<String> attachList = new ArrayList<>();
         for (PdsFile pdsFile : pdsFiles) {
-            attachList.add(pdsFile.getFileName());
+            attachList.add(pdsFile.setFullName());
         }
 
         return attachList;

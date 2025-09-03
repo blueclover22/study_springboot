@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserItemRepository extends JpaRepository<UserItem, Long> {
 
-    public List<UserItem> findByUserId(Long userNo);
+    public List<UserItem> findByUserNo(Long userNo);
 
 
     @Query("select a.userItemNo, a.userNo, a.itemId, a.regDate, b.itemName, b.price, b.description, b.pictureUrl"

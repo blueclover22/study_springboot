@@ -22,7 +22,7 @@ public class PdsFile {
     private Long pdsFileId;
 
     @Column(length = 200)
-    private String fileName;
+    private String fullName;
 
     private Integer downCnt = 0;
 
