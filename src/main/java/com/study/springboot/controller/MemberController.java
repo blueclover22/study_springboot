@@ -100,7 +100,7 @@ public class MemberController {
 
         String message = messageSource.getMessage("common.cannotSetupAdmin", null, Locale.KOREAN);
 
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
