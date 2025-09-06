@@ -2,9 +2,14 @@
 # setting
 - java  : 17
 - spring boot : 3.4.9
-- bulid : maven-wrapper
-- spring Security : 6
+- build : maven-wrapper
+- spring Security: 6
 - packaging : jar
+- mySql : 8 (sql : /db/study_mysql.sql )
+- application.properties : jdbc / upload path 확인
+
+# frontend
+- [vue.js](https://github.com/blueclover22/study_vue)
 
 ---
 
