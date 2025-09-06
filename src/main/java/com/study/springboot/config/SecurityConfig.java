@@ -44,6 +44,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration, MessageSource messageSource) throws Exception {
 
+        log.debug("SecurityConfig.filterChain");
+
         http
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
@@ -91,16 +93,25 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
+        log.debug("SecurityConfig.passwordEncoder");
+
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public UserDetailsService customUserDetailsService() {
+
+        log.debug("SecurityConfig.customUserDetailsService");
+
         return customUserDetailsService;
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
+        log.debug("SecurityConfig.corsConfigurationSource");
+
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
         CorsConfiguration config = new CorsConfiguration();
@@ -123,6 +134,9 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
+
+        log.debug("SecurityConfig.authenticationProvider");
+
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(customUserDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -131,17 +145,26 @@ public class SecurityConfig {
 
     @Bean
     public JwtRequestFilter jwtRequestFilter() {
+
+        log.debug("SecurityConfig.jwtRequestFilter");
+
         return new JwtRequestFilter(tokenProvider);
     }
 
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+
+        log.debug("SecurityConfig.authenticationManager");
+
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler(MessageSource messageSource) {
+
+        log.debug("SecurityConfig.accessDeniedHandler");
+
         return new CustomAccessDeniedHandler(messageSource);
     }
 

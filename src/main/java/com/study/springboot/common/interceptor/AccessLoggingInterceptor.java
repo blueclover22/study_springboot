@@ -29,6 +29,8 @@ public class AccessLoggingInterceptor implements HandlerInterceptor {
         @NonNull Object handler, 
         @Nullable ModelAndView modelAndView) throws Exception {
 
+        log.debug("AccessLoggingInterceptor.postHandle");
+
         String requestUri = request.getRequestURI();
 
         String remoteAddr = request.getRemoteAddr();
@@ -69,6 +71,9 @@ public class AccessLoggingInterceptor implements HandlerInterceptor {
         @NonNull HttpServletRequest request, 
         @NonNull HttpServletResponse response, 
         @NonNull Object handler) throws Exception {
+
+        log.debug("AccessLoggingInterceptor.preHandle");
+
         return true;
     }
 

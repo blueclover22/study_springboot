@@ -13,6 +13,8 @@ public class UploadFileUtils {
 
     public static String uploadFile(String uploadPath, String originalName, byte[] bytes) throws Exception {
 
+        log.debug("UploadFileUtils.uploadFile");
+
         UUID uid = UUID.randomUUID();
 
         String savedName = uid.toString() + "_" + originalName;
@@ -29,6 +31,9 @@ public class UploadFileUtils {
     }
 
     private static String calcPath(String uploadPath) {
+
+        log.debug("UploadFileUtils.calcPath");
+
         Calendar cal = Calendar.getInstance();
 
         String year = File.separator + cal.get(Calendar.YEAR);
@@ -41,6 +46,8 @@ public class UploadFileUtils {
     }
 
     private static void makeDir(String uploadPath, String... dirs) {
+
+        log.debug("UploadFileUtils.makeDir");
 
         if (new File(dirs[dirs.length - 1]).exists()) {
             return;
@@ -55,6 +62,8 @@ public class UploadFileUtils {
     }
 
     private static String makeUploadedFileName(String uploadPath, String path, String originalName) throws Exception {
+
+        log.debug("UploadFileUtils.makeUploadedFileName");
 
         String uploadedFileName = uploadPath + path + File.separator + originalName;
         return uploadedFileName.substring(uploadPath.length()).replace(File.separatorChar, '/');

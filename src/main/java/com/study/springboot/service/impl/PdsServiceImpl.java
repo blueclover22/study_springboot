@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PdsServiceImpl implements PdsService {
@@ -21,6 +24,8 @@ public class PdsServiceImpl implements PdsService {
 
     @Override
     public void register(Pds pds) throws Exception {
+
+        log.debug("PdsServiceImpl.register");
 
         Pds pdsEntity = new Pds();
 
@@ -49,6 +54,8 @@ public class PdsServiceImpl implements PdsService {
     @Override
     public Pds read(Long itemId) throws Exception {
 
+        log.debug("PdsServiceImpl.read");
+
         Pds pdsEntity = repository.getReferenceById(itemId);
         Integer viewCnt = pdsEntity.getViewCnt();
 
@@ -65,6 +72,8 @@ public class PdsServiceImpl implements PdsService {
 
     @Override
     public void modify(Pds item) throws Exception {
+
+        log.debug("PdsServiceImpl.modify");
 
         Pds pdsEntity = repository.getReferenceById(item.getItemId());
 
@@ -89,17 +98,25 @@ public class PdsServiceImpl implements PdsService {
 
     @Override
     public void remove(Long itemId) throws Exception {
+
+        log.debug("PdsServiceImpl.remove");
+
         repository.deleteById(itemId);
 
     }
 
     @Override
     public List<Pds> list() throws Exception {
+
+        log.debug("PdsServiceImpl.list");
+
         return repository.findAll(Sort.by(Sort.Direction.DESC, "itemId"));
     }
 
     @Override
     public List<String> getAttach(Long itemId) throws Exception {
+
+        log.debug("PdsServiceImpl.getAttach");
 
         Pds pdsEntity = repository.getReferenceById(itemId);
 
@@ -115,6 +132,8 @@ public class PdsServiceImpl implements PdsService {
 
     @Override
     public void updateAttachDownCnt(String fullName) throws Exception {
+
+        log.debug("PdsServiceImpl.updateAttachDownCnt");
 
         List<PdsFile> pdsFileList = fileRepository.findByFullName(fullName);
 

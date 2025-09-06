@@ -30,18 +30,27 @@ public class PdsController {
 
     @GetMapping
     public ResponseEntity<List<Pds>> list() throws Exception {
+
+        log.debug("PdsController.list");
+
         return new ResponseEntity<>(service.list(), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Pds> register(@Validated @RequestBody Pds pds) throws Exception {
+
+        log.debug("PdsController.register");
+
         service.register(pds);
         return new ResponseEntity<>(pds, HttpStatus.OK);
     }
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Pds> read(@PathVariable("itemId") Long itemId) throws Exception {
+
+        log.debug("PdsController.read");
+
         Pds pds = service.read(itemId);
         return new ResponseEntity<>(pds, HttpStatus.OK);
     }
@@ -50,6 +59,9 @@ public class PdsController {
     @PutMapping("/{itemId}")
     public ResponseEntity<Pds> modify(@PathVariable("itemId") Long itemId,
                                       @Validated @RequestBody Pds pds) throws Exception {
+
+        log.debug("PdsController.modify");
+
         pds.setItemId(itemId);
         service.modify(pds);
         return new ResponseEntity<>(pds, HttpStatus.OK);
@@ -58,6 +70,9 @@ public class PdsController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{itemId}")
     public ResponseEntity<Void> remove(@PathVariable("itemId") Long itemId) throws Exception {
+
+        log.debug("PdsController.remove");
+
         service.remove(itemId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -65,6 +80,9 @@ public class PdsController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value ="/upload", produces = "text/plain;charset=UTF-8")
     public ResponseEntity<String> upload(MultipartFile file) throws Exception {
+
+        log.debug("PdsController.upload");
+
         String savedName = UploadFileUtils.uploadFile(shopProperties.getUploadPath(), file.getOriginalFilename(), file.getBytes());
 
         return new ResponseEntity<>(savedName, HttpStatus.OK);
@@ -72,6 +90,9 @@ public class PdsController {
 
     @GetMapping("/download")
     public ResponseEntity<byte[]> download(String fullName) throws Exception {
+
+        log.debug("PdsController.download");
+
         ResponseEntity<byte[]> responseEntity = null;
 
         service.updateAttachDownCnt(fullName);
@@ -96,6 +117,9 @@ public class PdsController {
 
     @GetMapping("/attach/{itemId}")
     public List<String> attach(@PathVariable("itemId") Long itemId) throws Exception{
+
+        log.debug("PdsController.attach");
+
         return service.getAttach(itemId);
     }
 

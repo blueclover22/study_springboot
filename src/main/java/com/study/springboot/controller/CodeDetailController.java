@@ -24,18 +24,26 @@ public class CodeDetailController {
 
     @PostMapping
     public ResponseEntity<CodeDetail> register(@Validated @RequestBody CodeDetail codeDetail) throws Exception {
+
+        log.debug("CodeDetailController.register");
+
         service.register(codeDetail);
         return new ResponseEntity<>(codeDetail, HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<CodeDetail>> list() throws Exception {
+
+        log.debug("CodeDetailController.list");
+
         return new ResponseEntity<>(service.list(), HttpStatus.OK);
     }
 
     @GetMapping("/{groupCode}/{codeValue}")
     public ResponseEntity<CodeDetail> read(@PathVariable("groupCode") String groupCode,
                                            @PathVariable("codeValue") String codeValue) throws Exception {
+
+        log.debug("CodeDetailController.read");
 
         CodeDetail codeDetail = new CodeDetail();
         codeDetail.setGroupCode(groupCode);
@@ -48,6 +56,9 @@ public class CodeDetailController {
     public ResponseEntity<CodeDetail> modify(@PathVariable("groupCode") String groupCode,
                                              @PathVariable("codeValue") String codeValue,
                                              @Validated @RequestBody CodeDetail codeDetail) throws Exception {
+
+        log.debug("CodeDetailController.modify");
+
         codeDetail.setGroupCode(groupCode);
         codeDetail.setCodeValue(codeValue);
         service.modify(codeDetail);
@@ -57,6 +68,9 @@ public class CodeDetailController {
     @DeleteMapping("/{groupCode}/{codeValue}")
     public ResponseEntity<Void> remove(@PathVariable("groupCode") String groupCode,
                                        @PathVariable("codeValue") String codeValue) throws Exception {
+
+        log.debug("CodeDetailController.remove");
+
         CodeDetail codeDetail = new CodeDetail();
         codeDetail.setGroupCode(groupCode);
         codeDetail.setCodeValue(codeValue);

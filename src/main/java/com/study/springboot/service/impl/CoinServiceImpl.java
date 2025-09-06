@@ -18,6 +18,9 @@ import com.study.springboot.repository.PayCoinRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CoinServiceImpl implements CoinService {
@@ -29,6 +32,9 @@ public class CoinServiceImpl implements CoinService {
     @Transactional
     @Override
     public void charge(ChargeCoin chargeCoin) throws Exception {
+
+        log.debug("CoinServiceImpl.charge");
+
         Member memberEntity = memberRepository.getReferenceById(chargeCoin.getUserNo());
 
         int coin = memberEntity.getCoin();
@@ -41,11 +47,17 @@ public class CoinServiceImpl implements CoinService {
 
     @Override
     public List<ChargeCoin> list(Long userNo) throws Exception {
+
+        log.debug("CoinServiceImpl.list");
+
         return chargeCoinRepository.findAll(Sort.by(Sort.Direction.DESC, "historyNo"));
     }
 
     @Override
     public List<PayCoin> listPayHistory(Long userNo) throws Exception {
+
+        log.debug("CoinServiceImpl.listPayHistory");
+
         List<Object[]> valueArrays = payCoinRepository.listPayHistory(userNo);
 
         List<PayCoin> payCoinList = new ArrayList<PayCoin>();

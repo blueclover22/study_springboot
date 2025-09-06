@@ -35,6 +35,9 @@ public class UserItemController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER')")
     @GetMapping
     public ResponseEntity<List<UserItem>> list(@AuthenticationPrincipal CustomUser customUser) throws Exception {
+
+        log.debug("UserItemController.list");
+
         Long userNo = customUser.getUserNo();
         return new ResponseEntity<>(service.list(userNo), HttpStatus.OK);
     }
@@ -42,6 +45,9 @@ public class UserItemController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER')")
     @GetMapping("/{userItemNo}")
     public ResponseEntity<UserItem> read(@PathVariable("userItemNo") Long userItemNo) throws Exception {
+
+        log.debug("UserItemController.read");
+
         UserItem userItem = service.read(userItemNo);
         return new ResponseEntity<>(userItem, HttpStatus.OK);
     }
@@ -49,6 +55,8 @@ public class UserItemController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER')")
     @GetMapping("/download/{userItemNo}")
     public ResponseEntity<byte[]> download(@PathVariable("userItemNo") Long userItemNo, @AuthenticationPrincipal CustomUser customUser) throws Exception {
+
+        log.debug("UserItemController.download");
 
         UserItem userItem = service.read(userItemNo);
 
@@ -78,6 +86,7 @@ public class UserItemController {
             responseEntity = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK);
 
         } catch (Exception e) {
+            log.error("UserItemController.download", e);
             e.printStackTrace();
             responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

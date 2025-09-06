@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -19,6 +22,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void register(Member member) throws Exception {
+
+        log.debug("MemberServiceImpl.register");
+
         Member memberEntity = new Member();
 
         memberEntity.setUserId(member.getUserId());
@@ -39,6 +45,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<Member> list() throws Exception {
+
+        log.debug("MemberServiceImpl.list");
+
         List<Object[]> valueArrays = repository.listAllMember();
 
         List<Member> memberList = new ArrayList<Member>();
@@ -60,11 +69,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member read(Long userNo) throws Exception {
+
+        log.debug("MemberServiceImpl.read");
+
         return repository.getReferenceById(userNo);
     }
 
     @Override
     public void modify(Member member) throws Exception {
+
+        log.debug("MemberServiceImpl.modify");
 
         Member memberEntity = repository.getReferenceById(member.getUserNo());
         memberEntity.setUserName(member.getUserName());
@@ -89,11 +103,17 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void remove(Long userNo) throws Exception {
+
+        log.debug("MemberServiceImpl.remove");
+
         repository.deleteById(userNo);
     }
 
     @Override
     public void setupAdmin(Member member) throws Exception {
+
+        log.debug("MemberServiceImpl.setupAdmin");
+
         Member memberEntity = new Member();
 
         memberEntity.setUserId(member.getUserId());
@@ -112,11 +132,17 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public long countAll() throws Exception {
+
+        log.debug("MemberServiceImpl.countAll");
+
         return repository.count();
     }
 
     @Override
     public int getCoin(Long userNo) throws Exception {
+
+        log.debug("MemberServiceImpl.getCoin");
+
         Member member = repository.getReferenceById(userNo);
         return member.getCoin();
     }

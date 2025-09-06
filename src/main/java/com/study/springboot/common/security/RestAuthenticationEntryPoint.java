@@ -12,12 +12,18 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+
+        log.debug("RestAuthenticationEntryPoint.commence");
+
         response.setContentType("application/json;charset=UTF-8");
 
         ApiErrorInfo apiErrorInfo = new ApiErrorInfo();

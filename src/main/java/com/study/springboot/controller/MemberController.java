@@ -31,6 +31,9 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<Member> register(@Validated @RequestBody Member member) throws Exception {
+
+        log.debug("MemberController.register");
+
         String inputPassword = member.getUserPw();
         member.setUserPw(passwordEncoder.encode(inputPassword));
 
@@ -42,11 +45,17 @@ public class MemberController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<Member>> list() throws Exception {
+
+        log.debug("MemberController.list");
+
         return new ResponseEntity<>(service.list(), HttpStatus.OK);
     }
 
     @GetMapping("/{userNo}")
     public ResponseEntity<Member> read(@PathVariable("userNo") Long userNo) throws Exception {
+
+        log.debug("MemberController.read");
+
         return new ResponseEntity<>(service.read(userNo), HttpStatus.OK);
     }
 
@@ -54,6 +63,8 @@ public class MemberController {
     @PutMapping("/{userNo}")
     public ResponseEntity<Member> modify(@PathVariable("userNo") Long userNo,
                                          @Validated @RequestBody Member member) throws Exception {
+
+        log.debug("MemberController.modify");
 
         member.setUserNo(userNo);
         service.modify(member);
@@ -64,12 +75,17 @@ public class MemberController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{userNo}")
     public ResponseEntity<Void> remove(@PathVariable("userNo") Long userNo) throws Exception {
+
+        log.debug("MemberController.remove");
+
         service.remove(userNo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/setup", produces = "text/plain;charset=UTF-8")
     public ResponseEntity<String> setupAdmin(@Validated @RequestBody Member member) throws Exception {
+
+        log.debug("MemberController.setupAdmin");
 
         if (service.countAll() == 0) {
             String inputPassword = member.getUserPw();
@@ -90,6 +106,9 @@ public class MemberController {
     @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
     @GetMapping("/myInfo")
     public ResponseEntity<Member> getMyInfo(@AuthenticationPrincipal CustomUser customUser) throws Exception {
+
+        log.debug("MemberController.getMyInfo");
+
         Long userNo = customUser.getUserNo();
 
         Member member = service.read(userNo);

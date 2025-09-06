@@ -28,6 +28,9 @@ public class JwtTokenProvider {
     private final ShopProperties properties;
 
     public long getUserNo(String header) throws Exception {
+
+        log.debug("JwtTokenProvider.getUserNo");
+
         String token = header.substring(7);
 
         String secretKey = properties.getSecretKey();
@@ -47,6 +50,8 @@ public class JwtTokenProvider {
 
     public String createToken(long userNo, String userId, List<String> roles) {
 
+        log.debug("JwtTokenProvider.createToken");
+
         byte[] signingKey = getSigningKey();
         SecretKey key = Keys.hmacShaKeyFor(signingKey);
 
@@ -65,6 +70,8 @@ public class JwtTokenProvider {
     }
 
     public UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) {
+
+        log.debug("JwtTokenProvider.getAuthentication");
 
         if (isNotEmpty(tokenHeader)) {
             try {
@@ -115,19 +122,31 @@ public class JwtTokenProvider {
     }
 
     private byte[] getSigningKey() {
+
+        log.debug("JwtTokenProvider.getSigningKey");
+
         String secretKey = properties.getSecretKey();
         return Decoders.BASE64.decode(secretKey);  // Base64 디코딩
     }
 
     private boolean isNotEmpty(final CharSequence cs) {
+
+        log.debug("JwtTokenProvider.isNotEmpty");
+
         return !isEmpty(cs);  // 로직 수정
     }
 
     private boolean isEmpty(final CharSequence cs) {
+
+        log.debug("JwtTokenProvider.isEmpty");
+
         return cs == null || cs.length() == 0;
     }
 
     public boolean validateToken(String jwtToken) {
+
+        log.debug("JwtTokenProvider.validateToken");
+
         try {
             String secretKey = properties.getSecretKey();
             SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));

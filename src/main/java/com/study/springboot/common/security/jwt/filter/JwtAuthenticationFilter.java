@@ -17,6 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -24,6 +27,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final JwtTokenProvider tokenProvider;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider) {
+
+        log.debug("JwtAuthenticationFilter.JwtAuthenticationFilter");
+        
         this.authenticationManager = authenticationManager;
         this.tokenProvider = tokenProvider;
 
@@ -32,6 +38,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
+        log.debug("JwtAuthenticationFilter.attemptAuthentication");
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -43,6 +51,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+
+        log.debug("JwtAuthenticationFilter.successfulAuthentication");
+
         CustomUser user = (CustomUser) authResult.getPrincipal();
         long userNo = user.getUserNo();
         String userId = user.getUserId();

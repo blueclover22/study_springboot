@@ -13,16 +13,20 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CodeServiceImpl implements CodeService {
 
     private final CodeGroupRepository codeGroupRepository;
-
     private final CodeDetailRepository codeDetailRepository;
 
     @Override
     public List<CodeLabelValue> getCodeGroupList() throws Exception {
+
+        log.debug("CodeServiceImpl.getCodeGroupList");
 
         List<CodeGroup> codeGroups = codeGroupRepository.findAll(Sort.by(Sort.Direction.ASC, "groupCode"));
 
@@ -37,6 +41,8 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public List<CodeLabelValue> getCodeList(String groupCode) throws Exception {
+
+        log.debug("CodeServiceImpl.getCodeList");
 
         List<CodeDetail> codeDetails = codeDetailRepository.getCodeList(groupCode);
 

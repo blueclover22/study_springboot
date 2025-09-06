@@ -42,11 +42,17 @@ public class ItemController {
 
     @GetMapping
     public ResponseEntity<List<Item>> list() throws Exception {
+
+        log.debug("ItemController.list");
+
         return new ResponseEntity<>(itemService.list(), HttpStatus.OK);
     }
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Item> read(@PathVariable("itemId") Long itemId) throws Exception {
+
+        log.debug("ItemController.read");
+
         return new ResponseEntity<>(itemService.read(itemId), HttpStatus.OK);
     }
 
@@ -55,6 +61,8 @@ public class ItemController {
     public ResponseEntity<Item> register(@RequestPart("item") String itemString,
                                          @RequestPart("file") MultipartFile originalImageFile,
                                          @RequestPart("file2") MultipartFile previewImageFile) throws Exception {
+
+        log.debug("ItemController.register");
 
         Item item = new ObjectMapper().readValue(itemString, Item.class);
 
@@ -112,6 +120,8 @@ public class ItemController {
                                        @RequestPart(value = "file", required = false) MultipartFile originalImageFile,
                                        @RequestPart(value = "file2", required = false) MultipartFile previewImageFile) throws Exception {
 
+        log.debug("ItemController.modify");
+
         Item item = new ObjectMapper().readValue(itemString, Item.class);
         item.setItemId(itemId);
 
@@ -160,12 +170,17 @@ public class ItemController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{itemId}")
     public ResponseEntity<Void> remove(@PathVariable("itemId") Long itemId) throws Exception {
+
+        log.debug("ItemController.remove");
+
         itemService.remove(itemId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/display")
     public ResponseEntity<byte[]> displayFile(@RequestParam("itemId") Long itemId) throws Exception {
+
+        log.debug("ItemController.displayFile");
 
         ResponseEntity<byte[]> responseEntity = null;
 
@@ -196,6 +211,8 @@ public class ItemController {
 
     @GetMapping("/preview")
     public ResponseEntity<byte[]> previewFile(@RequestParam("itemId") Long itemId) throws Exception {
+
+        log.debug("ItemController.previewFile");
 
         ResponseEntity<byte[]> responseEntity = null;
 
@@ -228,6 +245,8 @@ public class ItemController {
     @GetMapping("/download/{itemId}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable("itemId") Long itemId) throws Exception {
 
+        log.debug("ItemController.downloadFile");
+
         ResponseEntity<byte[]> responseEntity = null;
 
         String fullName = itemService.getPicture(itemId);
@@ -256,6 +275,9 @@ public class ItemController {
     }
 
     private String uploadFile(String fileName, byte[] fileBytes) throws Exception {
+
+        log.debug("ItemController.uploadFile");
+
         UUID uid = UUID.randomUUID();
 
         String createdFileName = uid.toString() + "_" + fileName;
@@ -268,6 +290,8 @@ public class ItemController {
     }
 
     private MediaType getMediaType(String formatName) {
+
+        log.debug("ItemController.getMediaType");
 
         if (formatName != null) {
             if (formatName.equals("JPG")) {
@@ -285,6 +309,8 @@ public class ItemController {
 
     @GetMapping(value = "/buy/{itemId}", produces = "text/plain; charset=UTF-8")
     public ResponseEntity<String> buy(@PathVariable("itemId") Long itemId, @AuthenticationPrincipal CustomUser customUser) throws Exception {
+
+        log.debug("ItemController.buy");
 
         Long userNo = customUser.getUserNo();
 

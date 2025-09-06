@@ -26,6 +26,9 @@ public class BoardController {
     @PostMapping
     public ResponseEntity<Board> register(@Validated @RequestBody Board board,
                                           @AuthenticationPrincipal CustomUser customUser) throws Exception {
+
+        log.debug("BoardController.register");
+
         String userId = customUser.getUserId();
         board.setWriter(userId);
         service.register(board);
@@ -35,11 +38,17 @@ public class BoardController {
 
     @GetMapping
     public ResponseEntity<List<Board>> list() throws Exception {
+
+        log.debug("BoardController.list");
+
         return new ResponseEntity<>(service.list(), HttpStatus.OK);
     }
 
     @GetMapping("/{boardNo}")
     public ResponseEntity<Board> read(@PathVariable("boardNo") Long boardNo) throws Exception {
+
+        log.debug("BoardController.read");
+
         return new ResponseEntity<>(service.read(boardNo), HttpStatus.OK);
     }
 
@@ -47,6 +56,9 @@ public class BoardController {
     @DeleteMapping("/{boardNo}")
     public ResponseEntity<Void> remove(@PathVariable("boardNo") Long boardNo,
                                        @RequestParam("writer") String writer) throws Exception {
+
+        log.debug("BoardController.remove");
+
         service.remove(boardNo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -55,6 +67,9 @@ public class BoardController {
     @PutMapping("/{boardNo}")
     public ResponseEntity<Void> modify(@PathVariable("boardNo") Long boardNo,
                                        @Validated @RequestBody Board board) throws Exception {
+
+        log.debug("BoardController.modify");
+
         board.setBoardNo(boardNo);
         service.modify(board);
         return new ResponseEntity<>(HttpStatus.OK);

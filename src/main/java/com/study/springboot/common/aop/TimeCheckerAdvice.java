@@ -24,6 +24,8 @@ public class TimeCheckerAdvice {
             "!execution(* com.study.springboot.service.PerformanceLogService.*(..))")
     public Object timeLog(ProceedingJoinPoint joinPoint) throws Throwable {
 
+        log.debug("TimeCheckerAdvice.timeLog");
+
         long start = System.currentTimeMillis();
 
         Signature signature = joinPoint.getSignature();

@@ -22,17 +22,26 @@ public class NoticeController {
 
     @GetMapping("/{noticeNo}")
     public ResponseEntity<Notice> read(@PathVariable("noticeNo") Long noticeNo) throws Exception {
+
+        log.debug("NoticeController.read");
+
         return new ResponseEntity<>(service.read(noticeNo), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<Notice>> list() throws Exception {
+
+        log.debug("NoticeController.list");
+
         return new ResponseEntity<>(service.list(), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Notice> register(@Validated @RequestBody Notice notice) throws Exception {
+
+        log.debug("NoticeController.register");
+
         service.register(notice);
         return new ResponseEntity<>(notice, HttpStatus.OK);
     }
@@ -40,6 +49,9 @@ public class NoticeController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{noticeNo}")
     public ResponseEntity<Void> remove(@PathVariable("noticeNo") Long noticeNo) throws Exception {
+
+        log.debug("NoticeController.remove");
+
         service.remove(noticeNo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -48,6 +60,9 @@ public class NoticeController {
     @PutMapping("/{noticeNo}")
     public ResponseEntity<Notice> modify(@PathVariable("noticeNo") Long noticeNo,
                                          @Validated @RequestBody Notice notice) throws Exception {
+
+        log.debug("NoticeController.modify");
+
         notice.setNoticeNo(noticeNo);
         service.modify(notice);
         return new ResponseEntity<>(notice, HttpStatus.OK);

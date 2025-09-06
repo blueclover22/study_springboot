@@ -23,23 +23,35 @@ public class CodeGroupController {
 
     @PostMapping
     public ResponseEntity<CodeGroup> register(@Validated @RequestBody CodeGroup codeGroup) throws Exception {
+
+        log.debug("CodeGroupController.register");
+
         service.register(codeGroup);
         return new ResponseEntity<>(codeGroup, HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<CodeGroup>> list() throws Exception {
+
+        log.debug("CodeGroupController.list");
+
         return new ResponseEntity<>(service.list(), HttpStatus.OK);
     }
 
     @GetMapping("/{groupCode}")
     public ResponseEntity<CodeGroup> read(@PathVariable("groupCode") String groupCode) throws Exception {
+
+        log.debug("CodeGroupController.read");
+
         return new ResponseEntity<>(service.read(groupCode), HttpStatus.OK);
     }
 
     @PutMapping("/{groupCode}")
     public ResponseEntity<CodeGroup> modify(@PathVariable("groupCode") String groupCode,
                                             @Validated @RequestBody CodeGroup codeGroup) throws Exception {
+
+        log.debug("CodeGroupController.modify");
+
         codeGroup.setGroupCode(groupCode);
         service.modify(codeGroup);
         return new ResponseEntity<>(codeGroup, HttpStatus.OK);
@@ -47,6 +59,9 @@ public class CodeGroupController {
 
     @DeleteMapping("/{groupCode}")
     public ResponseEntity<Void> remove(@PathVariable("groupCode") String groupCode) throws Exception {
+
+        log.debug("CodeGroupController.remove");
+
         service.remove(groupCode);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PerformanceLogServiceImpl implements PerformanceLogService {
@@ -17,11 +20,17 @@ public class PerformanceLogServiceImpl implements PerformanceLogService {
 
     @Override
     public void register(PerformanceLog performanceLog) throws Exception {
+
+        log.debug("PerformanceLogServiceImpl.register");
+
         repository.save(performanceLog);
     }
 
     @Override
     public List<PerformanceLog> list() throws Exception {
+
+        log.debug("PerformanceLogServiceImpl.list");
+
         return repository.findAll(Sort.by(Sort.Direction.DESC, "logNo"));
     }
 }

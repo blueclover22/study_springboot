@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AccessLogServiceImpl implements AccessLogService {
@@ -17,11 +20,17 @@ public class AccessLogServiceImpl implements AccessLogService {
 
     @Override
     public void register(AccessLog accessLog) throws Exception {
+
+        log.debug("AccessLogServiceImpl.register");
+
         repository.save(accessLog);
     }
 
     @Override
     public List<AccessLog> list() throws Exception {
+
+        log.debug("AccessLogServiceImpl.list");
+
         return repository.findAll(Sort.by(Sort.Direction.DESC, "logNo"));
     }
 }

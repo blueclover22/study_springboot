@@ -23,13 +23,15 @@ public class CodeController {
     @GetMapping("/codeGroup")
     public ResponseEntity<List<CodeLabelValue>> getCodeGroupList() throws Exception {
 
-        log.info("getCodeGroupList");
+        log.debug("CodeController.getCodeGroupList");
 
         return new ResponseEntity<>(service.getCodeGroupList(), HttpStatus.OK);
     }
 
     @GetMapping("/job")
     public ResponseEntity<List<CodeLabelValue>> getJobList() throws Exception {
+
+        log.debug("CodeController.getJobList");
 
         String classCode = "A01";
 

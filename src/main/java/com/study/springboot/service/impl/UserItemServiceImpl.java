@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserItemServiceImpl implements UserItemService {
@@ -28,6 +31,8 @@ public class UserItemServiceImpl implements UserItemService {
     @Transactional
     @Override
     public void register(Member member, Item item) throws Exception {
+
+        log.debug("UserItemServiceImpl.register");
 
         Long userNo = member.getUserNo();
 
@@ -63,11 +68,17 @@ public class UserItemServiceImpl implements UserItemService {
 
     @Override
     public UserItem read(Long userItemNo) throws Exception {
+
+        log.debug("UserItemServiceImpl.read");
+
         return null;
     }
 
     @Override
     public List<UserItem> list(Long userNo) throws Exception {
+
+        log.debug("UserItemServiceImpl.list");
+
         return List.of();
     }
 }
