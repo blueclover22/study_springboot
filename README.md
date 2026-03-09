@@ -10,6 +10,7 @@
 
 # frontend
 - [vue.js](https://github.com/blueclover22/study_vue)
+- [react + ts](https://github.com/blueclover22/study_react_ts)
 
 ---
 
